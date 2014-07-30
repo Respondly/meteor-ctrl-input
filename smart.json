@@ -1,0 +1,12 @@
+{
+  "name": "ctrl-input",
+  "description": "UI controls that take clicks, gestures of text input from the user.",
+  "homepage": "",
+  "author": "",
+  "version": "0.0.1",
+  "git": "",
+  "packages": {
+    "sugar": {},
+    "munit": {}
+  }
+}
