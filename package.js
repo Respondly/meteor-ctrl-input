@@ -10,7 +10,9 @@ Package.on_use(function (api) {
   api.use(['ctrl', 'util', 'stylus-compiler']);
 
   // Generated with: github.com/philcockfield/meteor-package-paths
-  api.add_files('client/api.coffee', 'client');
+  api.add_files('client/core-checkbox-slider/core-checkbox-slider.html', 'client');
+  api.add_files('client/core-checkbox-slider/core-checkbox-slider.coffee', 'client');
+  api.add_files('client/core-checkbox-slider/core-checkbox-slider.styl', 'client');
 
 });
 

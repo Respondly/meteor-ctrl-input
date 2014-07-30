@@ -4,7 +4,7 @@
   "homepage": "",
   "author": "",
   "version": "0.0.1",
-  "git": "",
+  "git": "https://github.com/Respondly/meteor-ctrl-input",
   "packages": {
     "sugar": {},
     "munit": {}

@@ -1,0 +1,26 @@
+<template name='core-checkbox-slider'>
+  <div class='c-checkbox-slider c-not-checked {{ cssClass }}'>
+
+    {{#if showLeftLabel}}
+      <div class='c-label c-left'>{{{ labelLeft }}}</div>
+    {{/if}}
+
+    <div class='c-groove-outer'>
+      <div class='c-groove'>
+        <div class='c-thumb'></div>
+      </div>
+    </div>
+
+    {{#if labelRight}}
+      <div class='c-label c-right'>{{{ labelRight }}}</div>
+    {{/if}}
+
+    {{#if message}}
+      <div class='c-message'>{{ message }}</div>
+    {{/if}}
+
+  </div>
+</template>
+
+
+

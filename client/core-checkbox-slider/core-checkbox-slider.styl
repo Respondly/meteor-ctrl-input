@@ -1,0 +1,129 @@
+@import 'core.import'
+
+
+
+
+.c-checkbox-slider
+  GREEN = #4cd864
+  DURATION = 0.2s
+  position relative
+  display inline-block
+  cursor pointer
+
+  div
+    vertical-align middle
+
+  .c-groove-outer
+    position relative
+    display inline-block
+
+  .c-groove
+    abs-pos 0, 0, null, null
+    border solid 1px
+    .c-thumb
+      position absolute
+      top 0px
+      left 0px
+      border-radius 50%
+      border solid 1px
+      background white
+
+  &.c-disabled
+    opacity 0.3
+    cursor default
+
+  .c-label
+    display inline-block
+    color darken(white, 65%)
+    vertical-align middle
+
+  .c-message
+    color darken(white, 65%)
+
+
+  // Transitions (after load to avoid slide-movement on first render).
+  &.c-animated .c-groove
+    transition background-color DURATION, border-color DURATION, opacity DURATION
+    .c-thumb
+      transition background-color DURATION, border-color DURATION, left DURATION
+
+
+
+  // Sizes.
+  groove-size(WIDTH, HEIGHT, CHECKED_LEFT)
+    height HEIGHT
+    > .c-groove-outer
+      size WIDTH - 2, HEIGHT - 2
+
+      > .c-groove
+        size WIDTH - 2, HEIGHT - 2
+        border-radius (HEIGHT * 0.5)
+        .c-thumb
+          SIZE = HEIGHT - 4
+          size SIZE, SIZE
+    &.c-checked
+      .c-thumb
+        left CHECKED_LEFT
+
+  &.c-size-22
+    line-height 18px
+    groove-size(35px, 22px, 13px)
+    .c-label
+      font-size 13px
+      font-weight 400
+      &.c-left
+        padding-right 2px
+      &.c-right
+        padding-left 4px
+    .c-message
+      font-size 12px
+      line-height 16px
+      margin-top 5px
+
+
+  &.c-size-34
+    line-height 30px
+    groove-size(54px, 34px, 21px)
+    .c-label
+      font-size 18px
+      font-weight 300
+      &.c-left
+        padding-right 3px
+      &.c-right
+        padding-left 6px
+    .c-message
+      font-size 14px
+      line-height 18px
+      margin-top 8px
+
+
+  // Colors.
+  &.c-not-checked .c-groove
+    background rgba(black, 0.02)
+    border-color rgba(black, 0.08)
+    .c-thumb
+      border-color darken(white, 15%)
+      box-shadow 1px 2px 6px 2px rgba(black, 0.1)
+
+
+  &.c-checked .c-groove
+    background GREEN
+    border-color GREEN
+    .c-thumb
+      border-color white
+      box-shadow 1px 2px 6px 2px rgba(black, 0.2)
+
+  // Straddle toggles.
+  &.c-straddle
+    OPACITY = 0.5
+    &.c-checked
+      .c-label.c-left
+        opacity OPACITY
+    &.c-not-checked
+      .c-label.c-right
+        opacity OPACITY
+
+
+
+
+
