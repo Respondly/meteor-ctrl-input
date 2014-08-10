@@ -6,7 +6,7 @@ Events:
 
 ###
 Ctrl.define
-  'core-checkbox-slider':
+  'ctrl-checkbox-slider':
     created: ->
       el = @find()
 

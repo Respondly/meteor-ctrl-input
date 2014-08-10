@@ -10,20 +10,10 @@ Package.on_use(function (api) {
   api.use(['ctrl', 'util', 'stylus-compiler']);
 
   // Generated with: github.com/philcockfield/meteor-package-paths
-  api.add_files('client/core-checkbox-slider/core-checkbox-slider.html', 'client');
-  api.add_files('client/core-checkbox-slider/core-checkbox-slider.coffee', 'client');
-  api.add_files('client/core-checkbox-slider/core-checkbox-slider.styl', 'client');
+  api.add_files('client/checkbox-slider/checkbox-slider.html', 'client');
+  api.add_files('client/checkbox-slider/checkbox-slider.coffee', 'client');
+  api.add_files('client/checkbox-slider/checkbox-slider.styl', 'client');
 
 });
 
 
-
-Package.on_test(function (api) {
-  api.use(['munit', 'coffeescript', 'chai']);
-  api.use('ctrl-input');
-
-  // Generated with: github.com/philcockfield/meteor-package-paths
-  api.add_files('tests/shared/_init.coffee', ['client', 'server']);
-  api.add_files('tests/shared/tests.coffee', ['client', 'server']);
-
-});

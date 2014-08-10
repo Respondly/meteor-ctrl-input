@@ -1,5 +1,5 @@
 {
-  "name": "ctrl-input",
+  "name": "ctrls-input",
   "description": "UI controls that take clicks, gestures of text input from the user.",
   "homepage": "",
   "author": "",
@@ -7,7 +7,6 @@
   "git": "https://github.com/Respondly/meteor-ctrl-input",
   "packages": {
     "sugar": {},
-    "munit": {},
     "util": {
       "path": "../util"
     },
