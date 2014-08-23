@@ -6,8 +6,8 @@ Events:
 
 ###
 Ctrl.define
-  'ctrl-checkbox-slider':
-    created: ->
+  'c-checkbox-slider':
+    ready: ->
       el = @find()
 
       # Sync: CSS classes.
