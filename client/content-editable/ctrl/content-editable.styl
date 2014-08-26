@@ -1,0 +1,49 @@
+@import 'core.import'
+
+
+
+.c-content-editable-ctrl
+  position relative
+
+  // NOTE: Ensure this control gets the box-sizing it is expecting.
+  box-sizing(content-box)
+  *
+    box-sizing(content-box)
+
+  .c-textbox
+    // NOTE:  Do not assign "position:relative" here.
+    //        It will cause a bug in Webkit on a Retina monitor whereby the
+    //        the carat will not show when the textbox is empty.
+    outline 0
+    cursor text
+    &.cannot-edit
+      cursor default
+
+    &.disabled
+      opacity 0.3
+
+  .c-placeholder
+    color rgba(black, 0.3)
+    font-style italic
+
+  &.c-scrolling
+    .c-textbox
+      overflow hidden
+      overflow-y auto
+      height 100%
+
+  .c-spinner
+    position absolute
+  &.c-spinning
+    .c-textbox
+      padding-right 24px
+
+
+  &.border
+    border solid 1px darken(white, 30%)
+    box-shadow inset 0px 2px 8px 1px rgba(black, 0.04)
+    border-radius 4px
+    padding 8px
+    font-weight 400
+
+

@@ -1,0 +1,13 @@
+<template name='c-raw-textbox'>
+  <div class='c-raw-textbox {{ cssClass }}'>
+
+    {{#if multiLine}}
+      <textarea data-ctrl='{{ uid }}'></textarea>
+    {{else}}
+      <input type='text' data-ctrl='{{ uid }}' />
+    {{/if}}
+
+  </div>
+</template>
+
+

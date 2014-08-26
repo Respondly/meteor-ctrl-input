@@ -1,0 +1,10 @@
+<template name='c-content-editable'>
+  <div class='c-content-editable-ctrl {{ cssClass }}'>
+    <div class='c-placeholder abs-fill'></div>
+    <div class='c-textbox' data-ctrl='{{ uid }}'></div>
+
+    {{#if isSpinning}}
+      {{> ctrl type='c-spinner' isSpinning=true }}
+    {{/if}}
+  </div>
+</template>
