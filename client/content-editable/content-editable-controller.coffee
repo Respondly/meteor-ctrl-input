@@ -133,7 +133,7 @@ class Ctrls.ContentEditable extends AutoRun
         cancel = -> e.preventDefault()
 
         # Ensure the <br> is removed from an empty line (<p><br></p>)
-        if isFirefox and APP.core.keys.isContentKey(e)
+        if isFirefox and e.isContentKey()
           anchorNode = document.getSelection().anchorNode
           if anchorNode.outerHTML is BLANK_LINE
             $(anchorNode).children()[0]?.remove()
@@ -142,7 +142,7 @@ class Ctrls.ContentEditable extends AutoRun
         maxLength = @maxLength()
         if maxLength?
           if @length() >= maxLength
-            cancel() if APP.core.keys.isContentKey(e)
+            cancel() if e.isContentKey()
 
         # Handle special keys.
         switch e.which

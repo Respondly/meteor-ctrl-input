@@ -23,7 +23,7 @@ Ctrl.define
       @api.multiLine(@defaultValue('multiLine', true))
       @api.isPlainText(@defaultValue('isPlainText', true))
 
-    created: ->
+    ready: ->
       elTextbox = @find('> .c-textbox')
       initialHtml = @textbox.session.prop('html') ? ''
 
@@ -87,7 +87,7 @@ Ctrl.define
             # NOTE: This key-down check allows for pre-emptive removal of the placholder.
             #       on the initial keystroke to avoid typed text sitting over the
             #       placeholder until the key-up event fires.
-            setPlaceholder(false) if @api.isBlank() and e.isContentKey() and not e.isEnter
+            setPlaceholder(false) if @api.isBlank() and e.isContentKey() and not e.is.enter
 
       # Sync: Spinner.
       @autorun =>
@@ -95,17 +95,19 @@ Ctrl.define
             SPINNER_HEIGHT  = 22
             el              = @find()
             padding         = el.style().padding()
-            spinnerStyle    = @find('.c-spinner').style()
-            height          = el.outerHeight()
-            right           = padding.right
+            Util.delay =>
+              elSpinner = @find('.c-spinner')
+              spinnerStyle    = @find('.c-spinner').style()
+              height          = el.outerHeight()
+              right           = padding.right
 
-            top = if height <= 30
-                    (height / 2) - (SPINNER_HEIGHT / 2) # Vertical align.
-                  else
-                    padding.top
+              top = if height <= 30
+                      (height / 2) - (SPINNER_HEIGHT / 2) # Vertical align.
+                    else
+                      padding.top
 
-            spinnerStyle.top(top)
-            spinnerStyle.right(right)
+              spinnerStyle.top(top)
+              spinnerStyle.right(right)
 
 
 
