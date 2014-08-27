@@ -18,6 +18,7 @@ Package.on_use(function (api) {
   api.add_files('client/content-editable/ctrl/content-editable.html', 'client');
   api.add_files('client/checkbox-slider/checkbox-slider.html', 'client');
   api.add_files('client/raw-textbox/raw-textbox.html', 'client');
+  api.add_files('client/text-input/text-input.html', 'client');
   api.add_files('client/content-editable/lib/css/medium-editor.css', 'client');
   api.add_files('client/content-editable/lib/css/theme-default.css', 'client');
   api.add_files('client/content-editable/lib/js/medium-editor.js', 'client');
@@ -29,6 +30,9 @@ Package.on_use(function (api) {
   api.add_files('client/content-editable/css.styl', 'client');
   api.add_files('client/raw-textbox/raw-textbox.coffee', 'client');
   api.add_files('client/raw-textbox/raw-textbox.styl', 'client');
+  api.add_files('client/text-input/text-input.coffee', 'client');
+  api.add_files('client/text-input/text-input.styl', 'client');
+  api.add_files('client/text-input/textbox-date.coffee', 'client');
   api.add_files('client/textbox-binder.coffee', 'client');
 
 });

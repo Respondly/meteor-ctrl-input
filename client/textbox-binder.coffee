@@ -6,7 +6,7 @@ class Ctrls.TextboxBinder extends AutoRun
   Constructor.
   @param textboxCtrl:  The textbox control.
   @param propertyName: Name of the property-function.
-  @param modelFactory: Function that retrieves the model
+  @param modelFactory: Function that retrieves the model.
   @param options
             - textboxChanged(e):  Event function for modifying or cancelling changes.
             - modelChanged(e):    Event function for modifying or cancelling changes.

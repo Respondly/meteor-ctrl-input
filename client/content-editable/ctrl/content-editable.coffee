@@ -23,6 +23,7 @@ Ctrl.define
       @api.multiLine(@defaultValue('multiLine', true))
       @api.isPlainText(@defaultValue('isPlainText', true))
 
+
     ready: ->
       elTextbox = @find('> .c-textbox')
       initialHtml = @textbox.session.prop('html') ? ''

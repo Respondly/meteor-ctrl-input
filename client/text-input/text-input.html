@@ -1,0 +1,51 @@
+<template name='c-text-input'>
+  <div class='c-text-input c-form-element'>
+
+    {{#if hasLabel}}
+      <label>
+        {{{ label }}}
+        <span class='c-required'>*</span>
+      </label>
+    {{/if}}
+
+    <div class='c-input'>
+      {{#if hasPrefix}}
+        <div class='c-prefix'>
+          {{ prefixHtml }}
+        </div>
+      {{/if}}
+
+
+      {{#with inputCtrl}}
+        {{> ctrl
+              id='editableCtrl'
+              type='c-content-editable'
+              placeholder=placeholder
+              maxLength=maxLength
+              multiLine=multiLine
+              text=text
+              canEdit=canEdit
+              isPlainText=isPlainText
+        }}
+      {{/with}}
+
+
+      {{#if showErrorIcon}}
+        <div class='c-icon c-red-cross'></div>
+      {{/if}}
+      {{#if showTickIcon}}
+        <div class='c-icon c-green-tick'></div>
+      {{/if}}
+
+      {{#if required}}
+        <span class='c-required'>*</span>
+      {{/if}}
+    </div>
+
+    <div class='c-message'>
+      {{{ message }}}
+    </div>
+
+  </div>
+</template>
+

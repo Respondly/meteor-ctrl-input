@@ -1,0 +1,162 @@
+@import 'core.import'
+@import 'textbox.import'
+
+
+
+.c-text-input
+  CTRL_HEIGHT  = 32px
+  PREFIX_WIDTH = 32px
+  BORDER_COLOR = darken(white, 30%)
+  TEXTBOX_HEIGHT = 32px
+  color black
+
+  // NOTE: Ensure this control gets the box-sizing it is expecting.
+  box-sizing(content-box)
+  *
+    box-sizing(content-box)
+
+  min-height CTRL_HEIGHT - 2
+  min-width 60px
+  position relative
+  line-height 20px
+  text-align left
+
+  label
+    display inline-block
+    margin-top 7px
+    user-select none
+
+  .c-required
+    color red
+    font-weight 700
+    font-size 12px
+    visibility hidden // Revealed in override below.
+
+  .c-input
+    position absolute
+    top   0px
+    left  0px
+    right 0px
+    min-height CTRL_HEIGHT - 2
+
+    bg-textbox()
+    font-size 14px
+    font-weight 400
+
+    .c-prefix
+      display inline-block
+      abs-pos 0, 0, null, 0
+      background orange
+      width PREFIX_WIDTH
+      background rgba(black, 0.05)
+      text-align center
+      line-height 20px
+      border-right solid 1px BORDER_COLOR
+      color BORDER_COLOR
+      text-shadow 0px 1px white
+      padding-top 5px
+
+    .c-icon
+      position absolute
+      right 8px
+      height 14px
+      &.c-red-cross
+        top 8px
+        width 14px
+        background-image url('/packages/core-controls-form/images/text_input_error.svg')
+      &.c-green-tick
+        top 7px
+        width 17px
+        background-image url('/packages/core-controls-form/images/text_input_tick.svg')
+
+    // Shown when there is no label.
+    .c-required
+      abs-pos null, -6, -3, null
+      font-size 14px
+
+  &.has-label
+    .c-input
+      left 90px
+    .c-input
+      .c-required
+        display none
+
+  .c-content-editable-ctrl
+    padding-left 8px
+    padding-right 5px
+    padding-top 5px
+
+  .c-message
+    padding-top TEXTBOX_HEIGHT + 4
+    padding-left 2px
+    padding-right 0px
+    display none
+    text-align left
+
+  &.has-label
+    .c-message
+      margin-top 3px
+      padding-top 0px
+    &.label-top
+      TEXTBOX_TOP = 26px
+      label
+        margin-top 0px
+      .c-input
+        top TEXTBOX_TOP
+      .c-message
+        padding-top TEXTBOX_TOP + 4
+
+  &.is-valid
+    .c-textbox
+      margin-right 30px
+
+  &.has-error, &.has-message
+    .c-message
+      display block
+
+  &.has-error
+    .c-textbox
+      margin-right 28px // Ensure text does not run over icon.
+
+  &.is-required
+    .c-required
+      visibility visible
+
+  &.has-text
+    .c-required
+      visibility hidden // Only show when there is content.
+
+  &.has-prefix
+    .c-input
+      padding-left PREFIX_WIDTH
+
+
+  &.single-line
+    .c-content-editable
+      height 22px
+      overflow hidden
+      white-space nowrap
+
+  &.cannot-edit
+    .c-input
+      box-shadow none
+      background none
+      border-color transparent
+      .c-placeholder
+        display none
+    &.single-line
+      .c-content-editable
+        text-overflow ellipsis
+
+  &.disabled
+    .c-input
+      box-shadow none
+      background rgba(black, 0.03)
+      border-color rgba(black, 0.1)
+      color rgba(black, 0.5)
+
+
+
+
+
+
