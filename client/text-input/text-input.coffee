@@ -27,8 +27,6 @@ Ctrl.define
       @api.text(Util.asValue(@data.text))
       editableCtrl = @editableCtrl = @children.editableCtrl
 
-      console.log 'editableCtrl', editableCtrl
-
       # Bubble events.
       editableCtrl.on 'focus', (j,e) => @trigger 'focus', e
       editableCtrl.on 'blur', (j,e) =>
@@ -99,7 +97,7 @@ Ctrl.define
 
     api:
       label:          (value) -> @prop 'label',            value
-      required:       (value) -> @prop 'required',         value
+      required:       (value) -> @prop 'required',         value, default:false
 
       placeholder:    (value) -> @prop 'placeholder',      value,
       maxLength:      (value) -> @prop 'max-length',       value, default: 500
@@ -120,7 +118,6 @@ Ctrl.define
       isSpinning:     (value) -> @prop 'spinning',         value, default: false
       message:        (value) -> @prop 'message',          value, default: ''
       error:          (value) -> @prop 'error',            value, default: ''
-      error:          (value) -> @prop 'error',            value, default: ''
       labelAutoWidth: (value) -> @prop 'label-auto-width', value, default: false
       labelPosition:  (value) -> @prop 'label-position',   value, default: 'left' # Values: left | top
       selectOnFocus:  (value) -> @prop 'selectOnFocus',    value, default: true
@@ -140,8 +137,16 @@ Ctrl.define
         @_bind?.dispose()
         @_bind = new Ctrls.TextboxBinder(@ctrl, propertyName, modelFactory, options)
 
+
+      ###
+      Gets or sets the current text value.
+      ###
       text: (value) -> @editableCtrl?.text(value)
 
+
+      ###
+      Forces an update to the current visual state of the control.
+      ###
       updateState: ->
         @api.text(@api.text())
         @helpers.updateCss()

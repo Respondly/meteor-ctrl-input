@@ -33,7 +33,10 @@ Package.on_use(function (api) {
   api.add_files('client/text-input/text-input.coffee', 'client');
   api.add_files('client/text-input/text-input.styl', 'client');
   api.add_files('client/text-input/textbox-date.coffee', 'client');
+  api.add_files('client/common.styl', 'client');
   api.add_files('client/textbox-binder.coffee', 'client');
+  api.add_files('images/text_input_error.svg', ['client', 'server']);
+  api.add_files('images/text_input_tick.svg', ['client', 'server']);
 
 });
 
