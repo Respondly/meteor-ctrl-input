@@ -102,8 +102,9 @@ Ctrl.define
               height          = el.outerHeight()
               right           = padding.right
 
-              top = if height <= 30
-                      (height / 2) - (SPINNER_HEIGHT / 2) # Vertical align.
+              console.log 'height', height
+              top = if height <= 42
+                      (height / 2) - (SPINNER_HEIGHT / 2) - 1 # Vertical align.
                     else
                       padding.top
 
@@ -187,7 +188,10 @@ Ctrl.define
 
     helpers:
       cssClass: -> @defaultValue('cssClass')
-      isSpinning: -> @api.isSpinning()
+      isSpinning: ->
+        isSpinning = @api.isSpinning()
+        isSpinning = false unless @isReady
+        isSpinning
 
     events:
       'click': -> @api.focus()
