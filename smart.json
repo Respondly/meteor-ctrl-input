@@ -6,7 +6,6 @@
   "version": "0.0.1",
   "git": "https://github.com/Respondly/meteor-ctrl-input",
   "packages": {
-    "sugar": {},
     "util": {
       "path": "../util"
     },
