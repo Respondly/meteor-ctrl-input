@@ -102,7 +102,6 @@ Ctrl.define
               height          = el.outerHeight()
               right           = padding.right
 
-              console.log 'height', height
               top = if height <= 42
                       (height / 2) - (SPINNER_HEIGHT / 2) - 1 # Vertical align.
                     else
