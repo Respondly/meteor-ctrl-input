@@ -15,7 +15,7 @@ class Ctrls.TextboxDate
   Constructor
   @param textbox: The text-input control.
   ###
-  constructor: (@textbox, options = {}) ->
+  constructor: (@textbox) ->
     @textbox.maxLength(30) unless @textbox.maxLength()?
 
 
@@ -61,6 +61,7 @@ class Ctrls.TextboxDate
   ###
   isTimeSpecified: ->
     text = @text()
+    return false if Util.isBlank(text)
     return true if text.has(/am/gi) or text.has(/pm/gi)
     return true if text.has(/min/gi) or text.has(/hour/gi) or text.has(/sec/gi)
     false
