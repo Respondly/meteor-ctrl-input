@@ -32,6 +32,8 @@ Package.on_use(function (api) {
   api.add_files('client/raw-textbox/raw-textbox.styl', 'client');
   api.add_files('client/text-input/text-input.coffee', 'client');
   api.add_files('client/text-input/text-input.styl', 'client');
+  api.add_files('client/validation/email_validator.coffee', 'client');
+  api.add_files('client/validation/screen_name_validator.coffee', 'client');
   api.add_files('client/common.styl', 'client');
   api.add_files('client/textbox-binder.coffee', 'client');
   api.add_files('client/textbox-date.coffee', 'client');
