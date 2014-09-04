@@ -1,0 +1,30 @@
+<template name='c-checkbox'>
+  <div class='c-checkbox c-form-element border-box {{ cssClass }}'>
+
+    {{#if api.hasChildren}}
+      {{> ctrl type='c-twisty' id='twisty' }}
+    {{/if}}
+
+
+
+    <label class='checkbox'>
+      <input type='checkbox' data-uid='{{ uid }}'>
+      <span class='c-label'>{{{ label }}}</span>
+      {{#if showRequired}}
+        <span class='c-required'>*</span>
+      {{/if}}
+      {{#if api.message}}
+        <div class='c-message'>{{{ api.message }}}</div>
+      {{/if}}
+    </label>
+
+
+
+    {{#if api.hasChildren}}
+      <div class='c-children'>
+        <div class='c-inner'></div>
+      </div>
+    {{/if}}
+
+  </div>
+</template>
