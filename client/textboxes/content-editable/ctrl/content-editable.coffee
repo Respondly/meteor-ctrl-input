@@ -17,9 +17,16 @@ Ctrl.define
   'c-content-editable':
     init: ->
       @textbox = textbox = new Ctrls.ContentEditable(@id)
-      textbox.maxLength(@defaultValue('maxLength', null))
-      textbox.canEdit(@defaultValue('canEdit', true))
-      @api.selectOnFocus(@defaultValue('selectOnFocus', false))
+
+      # Sync non-method properties.
+      @autorun =>
+          textbox.selectOnFocus = @api.selectOnFocus()
+          textbox.scrollParent  = @api.scrollParent()
+          textbox.multiLine     = @api.multiLine()
+
+      # Set default values.
+      @api.maxLength(@defaultValue('maxLength', null))
+      @api.canEdit(@defaultValue('canEdit', true))
       @api.multiLine(@defaultValue('multiLine', true))
       @api.isPlainText(@defaultValue('isPlainText', true))
 
@@ -61,6 +68,7 @@ Ctrl.define
       @autorun =>
             canEdit = @api.canEdit()
             isEnabled = @api.isEnabled()
+            isMultiLine = @api.multiLine()
 
             el = @find()
             toggle = (cssClass, value) -> el.toggleClass(cssClass, value)
@@ -69,12 +77,23 @@ Ctrl.define
             toggle 'is-empty', @api.isEmpty()
             toggle 'is-blank', @api.isBlank()
             toggle 'has-content', not @api.isEmpty()
+            toggle 'is-multi-line', isMultiLine
+            toggle 'is-single-line', not isMultiLine
 
             toggle 'can-edit', canEdit
             toggle 'cannot-edit', not canEdit
 
             toggle 'is-enabled', isEnabled
             toggle 'disabled', not isEnabled
+
+
+      @autorun =>
+            isSingleLine = not @api.multiLine()
+            el = @el('.c-textbox')
+            height = if isSingleLine then "#{ el.outerHeight() }px" else ''
+            el.css 'max-height', height
+            el.toggleClass 'ellipsis', isSingleLine
+
 
       # Keep placeholder in sync.
       setPlaceholder = (show) =>
@@ -167,17 +186,10 @@ Ctrl.define
       scrollHeight: -> @textbox.scrollHeight()
       maxLength: (value) -> @textbox.maxLength(value)
 
-      selectOnFocus: (value) ->
-        @textbox.selectOnFocus = value if value isnt undefined
-        @textbox.selectOnFocus
+      selectOnFocus: (value) -> @prop 'selectOnFocus', value, default:false
+      scrollParent: (value) -> @prop 'scrollParent', value
+      multiLine: (value) -> @prop 'multiLine', value, default:true
 
-      scrollParent: (value) ->
-        @textbox.scrollParent = value if value isnt undefined
-        @textbox.scrollParent
-
-      multiLine: (value) ->
-        @textbox.multiLine = value if value isnt undefined
-        @textbox.multiLine
 
       onKeydown: (func) -> @textbox.onKeydown(func)
       onKeyup:   (func) -> @textbox.onKeyup(func)
