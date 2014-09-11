@@ -4,7 +4,7 @@ function MediumEditor(elements, options) {
 }
 
 
-INTERNAL.MediumEditor = MediumEditor
+PKG.MediumEditor = MediumEditor
 
 if (typeof module === 'object') {
     module.exports = MediumEditor;

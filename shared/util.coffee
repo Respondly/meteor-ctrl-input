@@ -7,7 +7,7 @@ Convert HTML from contenteditable areas to text
     so may or may not be appropriate for general use.
 
 ###
-INTERNAL.htmlToText = (html) ->
+PKG.htmlToText = (html) ->
   return '' unless html?
 
   # Approach for handling <br> tags is to split on them, process the text, then join with </p><p>

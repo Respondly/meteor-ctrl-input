@@ -91,7 +91,7 @@ class Ctrls.ContentEditable extends AutoRun
 
 
     # Create the rich-text formatter.
-    mediumEditor = new INTERNAL.MediumEditor el[0],
+    mediumEditor = new PKG.MediumEditor el[0],
           placeholder: ''
           cleanPastedHTML:  false
           forcePlainText:   true
@@ -504,5 +504,5 @@ class Ctrls.ContentEditable extends AutoRun
 
 
 
-toText = (html) -> INTERNAL.htmlToText(html)
+toText = (html) -> PKG.htmlToText(html)
 
