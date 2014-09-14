@@ -2,20 +2,20 @@
 UI controls that take clicks, gestures of text input from the user.
 
 
-# Installation
+## Installation
 When running for the first time:
 
     mrt update
     package update
 
 
-# Run Tests
+## Run Tests
 
     mrt test-packages ctrl-input
 
 
 
-# License (MIT)
+## License (MIT)
 
 Copyright © 2014, **Respondly**
 
