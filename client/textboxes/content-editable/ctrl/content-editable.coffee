@@ -88,11 +88,12 @@ Ctrl.define
 
 
       @autorun =>
-            isSingleLine = not @api.multiLine()
-            el = @el('.c-textbox')
-            height = if isSingleLine then "#{ el.outerHeight() }px" else ''
-            el.css 'max-height', height
-            el.toggleClass 'ellipsis', isSingleLine
+            Deps.afterFlush =>
+              isSingleLine = not @api.multiLine()
+              el = @el('.c-textbox')
+              height = if isSingleLine then "#{ el.outerHeight() }px" else ''
+              el.css 'max-height', height
+              el.toggleClass 'ellipsis', isSingleLine
 
 
       # Keep placeholder in sync.
@@ -126,8 +127,9 @@ Ctrl.define
                     else
                       padding.top
 
-              spinnerStyle.top(top)
-              spinnerStyle.right(right)
+              spinnerStyle.top(top.round())
+              spinnerStyle.right(right.round())
+              elSpinner.removeClass('hidden')
 
 
 
