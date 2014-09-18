@@ -100,10 +100,10 @@ Ctrl.define
       required:       (value) -> @prop 'required',         value, default:false
 
       placeholder:    (value) -> @prop 'placeholder',      value,
-      maxLength:      (value) -> @prop 'max-length',       value, default: 500
-      canEdit:        (value) -> @prop 'can-edit',         value, default: true
+      maxLength:      (value) -> @prop 'maxLength',       value, default: 500
+      canEdit:        (value) -> @prop 'canEdit',         value, default: true
       isEnabled:      (value) -> @prop 'enabled',          value, default: true
-      multiLine:      (value) -> @prop 'multi-line',       value, default: false
+      multiLine:      (value) -> @prop 'multiLine',       value, default: false
       prefix:         (value) -> @prop 'prefix',           value
 
       focus: -> @editableCtrl?.focus()
@@ -113,14 +113,15 @@ Ctrl.define
       isEmpty:  -> Util.isBlank(@api.text())
       hasValue: -> not @api.isEmpty()
 
-      hoverEdit:      (value) -> @prop 'hover-edit',       value, default: false
-      isValid:        (value) -> @prop 'valid',            value,
-      isSpinning:     (value) -> @prop 'spinning',         value, default: false
-      message:        (value) -> @prop 'message',          value, default: ''
-      error:          (value) -> @prop 'error',            value, default: ''
-      labelAutoWidth: (value) -> @prop 'label-auto-width', value, default: false
-      labelPosition:  (value) -> @prop 'label-position',   value, default: 'left' # Values: left | top
-      selectOnFocus:  (value) -> @prop 'selectOnFocus',    value, default: true
+      hoverEdit:      (value) -> @prop 'hoverEdit',      value, default: false
+      isValid:        (value) -> @prop 'isValid',        value,
+      isSpinning:     (value) -> @prop 'isSpinning',     value, default: false
+      isSearch:       (value) -> @prop 'isSearch',       value, default: false
+      message:        (value) -> @prop 'message',        value, default: ''
+      error:          (value) -> @prop 'error',          value, default: ''
+      labelAutoWidth: (value) -> @prop 'labelAutoWidth', value, default: false
+      labelPosition:  (value) -> @prop 'labelPosition',  value, default: 'left' # Values: left | top
+      selectOnFocus:  (value) -> @prop 'selectOnFocus',  value, default: true
 
       hasLabel: -> @api.label()?
       hasMessage: -> not Util.isBlank(@api.message())
@@ -163,6 +164,7 @@ Ctrl.define
       showInput:       -> @api.canEdit() and @api.isEnabled()
       showErrorIcon:   -> @api.hasError() and not @api.isSpinning()
       showTickIcon:    -> @api.isValid() is true and not @api.hasError() and not @api.isSpinning()
+
       message: ->
         error   = @api.error()
         message = @api.message()
@@ -256,6 +258,7 @@ Ctrl.define
           el.toggleClass 'is-valid', @api.isValid() is true
           el.toggleClass 'is-spinning', @api.isSpinning() is true
           el.toggleClass 'is-required', @api.required() is true
+          el.toggleClass 'is-search', @api.isSearch() is true
           el.toggleClass 'has-error', @api.hasError()
           el.toggleClass 'has-message', @api.hasMessage() and not hasStringError
           el.toggleClass 'has-label', @api.hasLabel()

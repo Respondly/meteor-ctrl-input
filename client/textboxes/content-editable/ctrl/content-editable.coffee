@@ -123,7 +123,7 @@ Ctrl.define
               right           = padding.right
 
               top = if height <= 42
-                      (height / 2) - (SPINNER_HEIGHT / 2) - 1 # Vertical align.
+                      (height / 2) - (SPINNER_HEIGHT / 2)  # Vertical align.
                     else
                       padding.top
 
