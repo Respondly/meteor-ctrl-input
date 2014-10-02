@@ -1,5 +1,3 @@
-
-
 ###
 An <INPUT> textbox.
 
@@ -25,7 +23,7 @@ Ctrl.define
     ready: ->
       # Setup initial conditions.
       @api.text(Util.asValue(@data.text))
-      editableCtrl = @editableCtrl = @firstChild('c-content-editable')
+      editableCtrl = @editableCtrl = @findChild('c-content-editable')
 
       # Bubble events.
       editableCtrl.on 'focus', (j,e) => @trigger 'focus', e
