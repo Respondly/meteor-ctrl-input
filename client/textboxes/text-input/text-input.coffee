@@ -25,7 +25,7 @@ Ctrl.define
     ready: ->
       # Setup initial conditions.
       @api.text(Util.asValue(@data.text))
-      editableCtrl = @editableCtrl = @children.editableCtrl
+      editableCtrl = @editableCtrl = @firstChild('c-content-editable')
 
       # Bubble events.
       editableCtrl.on 'focus', (j,e) => @trigger 'focus', e
