@@ -395,7 +395,7 @@ class Ctrls.ContentEditable extends AutoRun
       value = null if not Object.isNumber(value)
       if value isnt null
         value = null if value < 1
-    @hash.prop 'max-length', value, default:null
+    @hash.prop 'maxLength', value, default:null
 
 
   ###
@@ -481,7 +481,7 @@ class Ctrls.ContentEditable extends AutoRun
   REACTIVE: Gets or sets whether the text content is overflowing the available space within the textbox.
   ###
   isOverflowing: ->
-    prop = (value) => @hash.prop 'overflowing', value, default:false
+    prop = (value) => @hash.prop 'isOverflowing', value, default:false
     el = if @scrollParent then @scrollParent[0] else @el?[0]
     if el
       prop(el.offsetHeight < el.scrollHeight)
@@ -493,7 +493,7 @@ class Ctrls.ContentEditable extends AutoRun
   ###
   scrollHeight: ->
     el = @el?[0]
-    prop = (value) => @hash.prop 'scroll-height', value, default:el?.scrollHeight
+    prop = (value) => @hash.prop 'scrollHeight', value, default:el?.scrollHeight
     if el
       prop(el.scrollHeight)
     prop() # Hook into reactive context.
