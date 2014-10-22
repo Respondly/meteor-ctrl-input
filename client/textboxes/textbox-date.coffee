@@ -80,32 +80,13 @@ parse = (text) ->
 
   tryParse = (result = {}) ->
       isValid = (value) ->
-            date = Date.create(value)
+            date = Date.future(value)
             if date.isValid()
               result.date = date
               true
             else
               false
 
-      startsWith = (values, prefixes...) ->
-          values.any (item) ->
-                if prefixes.length is 0
-                  return text.startsWith(item)
-                else
-                  for prefix in prefixes
-                    return true if text.startsWith(prefix + item)
-                  false
-
-      # Orient toward future ("next") when a single day is specified.
-      #     This changes from default Sugar behavior of turning "mon"
-      #     into the closest monday in the past.
-      text = "next #{ text }" if startsWith(days)
-
-      # Now that we are orienting single day values to the future ("next")
-      # make "last" mean the most recent specified day.
-      if startsWith(days, 'last', 'last ')
-        text = text.remove(/^last/).trim()
-        text = "this #{ text }"
 
       # Attempt to parse the date.
       return if isValid(text)
