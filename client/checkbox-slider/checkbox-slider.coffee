@@ -96,6 +96,14 @@ Ctrl.define
       click: -> @api.toggle(wasClicked:true) if @api.isEnabled()
 
 
+      ###
+      See [CheckboxBinder].
+      ###
+      bind: (propertyName, modelFactory, options = {}) ->
+        @_bind?.dispose()
+        @_bind = new Ctrls.CheckboxBinder(@ctrl, propertyName, modelFactory, options)
+
+
     helpers:
       cssClass: -> @defaultValue('cssClass')
 

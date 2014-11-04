@@ -35,6 +35,7 @@ Package.on_use(function (api) {
   api.add_files('client/textboxes/text-input/text-input.styl', 'client');
   api.add_files('client/checkbox/checkbox.coffee', 'client');
   api.add_files('client/checkbox/checkbox.styl', 'client');
+  api.add_files('client/textboxes/checkbox-binder.coffee', 'client');
   api.add_files('client/textboxes/textbox-binder.coffee', 'client');
   api.add_files('client/textboxes/textbox-date.coffee', 'client');
   api.add_files('client/checkbox-slider/checkbox-slider.coffee', 'client');
