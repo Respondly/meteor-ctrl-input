@@ -43,18 +43,15 @@ class Ctrls.DataBinder extends AutoRun
 
 
   ###
-  The read/write property function on the model.
+  Gets or sets the property on model.
   ###
   modelProp: (value) -> @model()[@modelPropName](value)
 
 
-  ctrlProp: (value) ->
-    if value isnt undefined
-      console.log 'WRITE', value
-
-      @ctrl[@ctrlPropName](value)
-
-    @ctrl[@ctrlPropName]()
+  ###
+  Gets or sets the property on UI control.
+  ###
+  ctrlProp: (value) -> @ctrl[@ctrlPropName](value)
 
 
   ###
