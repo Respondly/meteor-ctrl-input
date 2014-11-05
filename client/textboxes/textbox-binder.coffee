@@ -8,8 +8,6 @@ class Ctrls.TextboxBinder extends AutoRun
   @param propertyName: Name of the property-function.
   @param modelFactory: Function that retrieves the model.
   @param options
-            - textboxChanged(e):  Event function for modifying or cancelling changes.
-            - modelChanged(e):    Event function for modifying or cancelling changes.
             - format:             The content format:
                                         - 'html'
                                         - 'text' (default)
@@ -17,43 +15,38 @@ class Ctrls.TextboxBinder extends AutoRun
   constructor: (@textboxCtrl, @propertyName, @modelFactory, options = {}) ->
     super
     format = options.format ? 'text'
-    @_onTextboxChanged = new Handlers(@)
-    @_onModelChanged   = new Handlers(@)
-
-    @onTextboxChanged(options.textboxChanged)
-    @onModelChanged(options.modelChanged)
 
     # SYNC: Update the model when the textbox changes.
     @textboxCtrl.on 'changed', (j,e) =>
           to = e[format]
           from = @prop()
+          @prop(to)
 
-          result = @_onTextboxChanged.invoke({ to:to, from:from })
-          if result
-            @prop(to)
 
-    # SYNC: Update the textbox when the saved model property is updated.
-    @autorun =>
-          return if @isDisposed
+
+    syncTextboxWithModel = =>
           if model = @model()
             to = model.changes()?[@propertyName]?.to ? @prop()
             from = Deps.nonreactive => @textboxCtrl.text()
-            return if to is from
-
-            result = @_onModelChanged.invoke({ to:to, from:from })
-            if result
-              Deps.nonreactive =>
-                @textboxCtrl.text(to)
+            if to isnt from
+              @textboxCtrl.text(to) unless @textboxCtrl.text() is to
 
 
+    # SYNC: Update the textbox when the saved model property is updated.
+    @autorun => syncTextboxWithModel()
 
-  disopse: ->
-    super
-    @_onTextboxChanged.dispose()
-    @_onModelChanged.dispose()
+
+    # SYNC: Model reverts.
+    @autorun =>
+      if model = @model()
+        if model.isSubModel() and model.parentModel?
+          model = model.parentModel() # NB: Hook into parent model, this ensures
+                                      #     reactive changes invoke the callback.
+        syncTextboxWithModel() if model.changes() is null
+
+
+
 
   model: -> @modelFactory()
   prop: (value) -> @model()[@propertyName](value)
 
-  onTextboxChanged: (func) -> @_onTextboxChanged.push(func)
-  onModelChanged: (func) -> @_onModelChanged.push(func)
