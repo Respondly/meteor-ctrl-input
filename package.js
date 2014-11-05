@@ -35,12 +35,11 @@ Package.on_use(function (api) {
   api.add_files('client/textboxes/text-input/text-input.styl', 'client');
   api.add_files('client/checkbox/checkbox.coffee', 'client');
   api.add_files('client/checkbox/checkbox.styl', 'client');
-  api.add_files('client/textboxes/checkbox-binder.coffee', 'client');
-  api.add_files('client/textboxes/textbox-binder.coffee', 'client');
   api.add_files('client/textboxes/textbox-date.coffee', 'client');
   api.add_files('client/checkbox-slider/checkbox-slider.coffee', 'client');
   api.add_files('client/checkbox-slider/checkbox-slider.styl', 'client');
   api.add_files('client/common.styl', 'client');
+  api.add_files('client/data-binder.coffee', 'client');
   api.add_files('images/text_input_error.svg', ['client', 'server']);
   api.add_files('images/text_input_tick.svg', ['client', 'server']);
 

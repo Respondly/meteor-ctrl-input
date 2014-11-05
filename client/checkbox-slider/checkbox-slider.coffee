@@ -71,6 +71,8 @@ Ctrl.define
               isChecked: value
               wasClicked: options.wasClicked ? false
             @trigger('changed', args)
+            @__internal__.binder?.onCtrlChanged(value)
+
           @_lastIsChecked = value
         result
 
@@ -97,11 +99,11 @@ Ctrl.define
 
 
       ###
-      See [CheckboxBinder].
+      See [Ctrls.DataBinder].
       ###
-      bind: (propertyName, modelFactory, options = {}) ->
-        @_bind?.dispose()
-        @_bind = new Ctrls.CheckboxBinder(@ctrl, propertyName, modelFactory, options)
+      bind: (propertyName, modelFactory) ->
+        @__internal__.binder?.dispose()
+        @__internal__.binder = new Ctrls.DataBinder(((value) => @api.isChecked(value)), propertyName, modelFactory)
 
 
     helpers:

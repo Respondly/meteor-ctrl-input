@@ -43,6 +43,7 @@ Ctrl.define
           @trigger('changed', e)
           @helpers.updateHoverEdit()
           @helpers.updateInputText()
+          @__internal__.binder?.onCtrlChanged(e.text)
 
       # Sync: Update input when related state changes.
       @autorun =>
@@ -90,7 +91,7 @@ Ctrl.define
 
 
     destroyed: ->
-      @_bind?.dispose()
+      @__internal__.binder?.dispose()
 
 
     api:
@@ -132,9 +133,14 @@ Ctrl.define
       clear: -> Deps.nonreactive => @api.text('')
       empty: -> @api.clear()
 
-      bind: (propertyName, modelFactory, options = {}) ->
-        @_bind?.dispose()
-        @_bind = new Ctrls.TextboxBinder(@ctrl, propertyName, modelFactory, options)
+
+      ###
+      See [Ctrls.DataBinder].
+      ###
+      bind: (propertyName, modelFactory) ->
+        @__internal__.binder?.dispose()
+        @__internal__.binder = new Ctrls.DataBinder(((value) => @api.text(value)), propertyName, modelFactory)
+
 
 
       ###
