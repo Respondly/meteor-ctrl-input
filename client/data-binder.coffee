@@ -27,7 +27,7 @@ class Ctrls.DataBinder extends AutoRun
             if model.isSubModel() and model.parentModel?
               # NB: Hook into parent model if this is a sub-model.
               #     This ensures reactive changes invoke the callback.
-              model = model.parentModel()
+              model = model.parentModel
 
             if model.changes() is null
               # The changes have been reset, sync the control.
@@ -53,5 +53,5 @@ class Ctrls.DataBinder extends AutoRun
   ###
   onCtrlChanged: (toValue) ->
     # Update the model when the UI control changes.
-    @modelProp(toValue) unless @modelProp() is toValue
+    @modelProp(toValue)
 
