@@ -139,7 +139,7 @@ Ctrl.define
       ###
       bind: (propertyName, modelFactory) ->
         @__internal__.binder?.dispose()
-        @__internal__.binder = new Ctrls.DataBinder(((value) => @api.text(value)), propertyName, modelFactory)
+        @__internal__.binder = new Ctrls.DataBinder(@ctrl, 'text', propertyName, modelFactory)
 
 
 

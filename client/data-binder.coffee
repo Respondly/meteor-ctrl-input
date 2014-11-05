@@ -4,18 +4,19 @@ Binds changes between a model and a UI control.
 class Ctrls.DataBinder extends AutoRun
   ###
   Constructor.
-  @param ctrlProp(value): The reactive property for the control to bind to.
-  @param propertyName:    Name of the property-function.
+  @param ctrl:            The UI control.
+  @param ctrlPropName:    The name of the property-function on the UI control.
+  @param modelPropName:   Name of the property-function.
   @param modelFactory:    Function that retrieves the model.
   ###
-  constructor: (@ctrlProp, @propertyName, @modelFactory) ->
+  constructor: (@ctrl, @ctrlPropName, @modelPropName, @modelFactory) ->
     super
 
     syncCtrlWithModel = =>
           if model = @model()
-            to = model.changes()?[@propertyName]?.to ? @modelProp()
+            to = model.changes()?[@modelPropName]?.to ? @modelProp()
             from = Deps.nonreactive => @ctrlProp()
-            if to isnt from
+            if (to isnt from) and not @ctrl.hasFocus()
               @ctrlProp(to) unless @ctrlProp() is to
 
     # SYNC: Update the UI control when the saved model property is updated.
@@ -44,7 +45,16 @@ class Ctrls.DataBinder extends AutoRun
   ###
   The read/write property function on the model.
   ###
-  modelProp: (value) -> @model()[@propertyName](value)
+  modelProp: (value) -> @model()[@modelPropName](value)
+
+
+  ctrlProp: (value) ->
+    if value isnt undefined
+      console.log 'WRITE', value
+
+      @ctrl[@ctrlPropName](value)
+
+    @ctrl[@ctrlPropName]()
 
 
   ###
