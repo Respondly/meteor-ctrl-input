@@ -200,7 +200,7 @@ class Ctrls.ContentEditable extends AutoRun
           if userAgent.isIE() or userAgent.isChrome()
             text = ''
             for line, i in @text().lines()
-              text += "#{ line }\n" if i.isEven()
+              text += "#{ line }\n"
             @text(text)
 
         # Finish up.

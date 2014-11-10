@@ -1,3 +1,6 @@
+// This is not the vanilla MediumEditor - one line has been changed
+// to fix pasting in windows. (Line 1076 at time of writing)
+
 function MediumEditor(elements, options) {
     'use strict';
     return this.init(elements, options);
@@ -1070,7 +1073,7 @@ if (typeof module === 'object') {
                     }
                     if (!self.options.disableReturn) {
                         text = self.isIE ? clipboardData.getData('Text') : clipboardData.getData('text/plain')
-                        paragraphs = text.split(/[\r\n]/g);
+                        paragraphs = text.replace(/\r/g,'').split(/[\r\n]/g);
 
                         for (p = 0; p < paragraphs.length; p += 1) {
                             if (paragraphs[p] !== '') {
