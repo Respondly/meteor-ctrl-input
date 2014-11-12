@@ -135,6 +135,7 @@ Ctrl.define
 
 
       ###
+      Sets up a Model data-binding for the textbox.
       See [Ctrls.DataBinder].
       ###
       bind: (propertyName, modelFactory) ->
