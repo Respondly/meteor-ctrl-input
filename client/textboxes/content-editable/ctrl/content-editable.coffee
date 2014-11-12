@@ -59,7 +59,8 @@ Ctrl.define
       bubble('key:enter')
       bubble('key:esc')
 
-      # Focus/blur.
+      # Handle events.
+      @textbox.on 'changed', (j,e) => @__internal__.binder?.onCtrlChanged(e.text)
       @textbox.on 'focus', (j,e) => @find().addClass 'focused'
       @textbox.on 'blur', (j,e) => @find().removeClass 'focused'
       @textbox.el.on 'paste', (e) => setPlaceholder(false)
@@ -158,11 +159,11 @@ Ctrl.define
 
       ###
       Sets up a Model data-binding for the textbox.
-      See [TextboxBinder].
+      See [Ctrls.DataBinder].
       ###
       bind: (propertyName, modelFactory, options = {}) ->
-        @_bind?.dispose()
-        @_bind = new Ctrls.TextboxBinder(@ctrl, propertyName, modelFactory, options)
+        @__internal__.binder?.dispose()
+        @__internal__.binder = new Ctrls.DataBinder(@ctrl, 'text', propertyName, modelFactory)
 
 
 
