@@ -9,15 +9,19 @@
   position relative
   display inline-block
   cursor pointer
+  outline none
+  box-sizing border-box
 
   div
     vertical-align middle
 
   // ----------------------------------
 
+
   .c-groove-outer
     position relative
     display inline-block
+
 
   .c-groove
     abs-pos 0, 0, null, null
@@ -26,12 +30,33 @@
       position absolute
       top 0px
       left 0px
-      border-radius 50%
-      border solid 1px
-      background white
+      .c-button
+        abs-pos()
+        border-radius 50%
+        border solid 1px
+        background white
+
+
+  // FOCUS ----------------------------------
+
+  .c-thumb-focus, .c-indeterminate-focus
+    transition background-color DURATION
+    opacity 0
+    transition opacity DURATION
+
+  &:focus
+    .c-thumb-focus
+      opacity 1
+
+  &:focus.c-indeterminate
+    .c-thumb-focus
+      opacity 0
+    .c-indeterminate-focus
+      opacity 1
 
 
   // ----------------------------------
+
 
   .c-indeterminate-dot
     abs-center-x()
@@ -87,24 +112,34 @@
 
   // SIZES ------------------------------------------------------
 
-  groove-size(WIDTH, HEIGHT, CHECKED_LEFT)
+  groove-size(WIDTH, HEIGHT, CHECKED_LEFT, FOCUS_MARGIN)
     min-height HEIGHT
     > .c-groove-outer
-      size WIDTH - 2, HEIGHT - 2
-
+      size WIDTH, HEIGHT
       > .c-groove
         size WIDTH - 2, HEIGHT - 2
         border-radius (HEIGHT * 0.5)
         .c-thumb
-          SIZE = HEIGHT - 4
+          SIZE = HEIGHT - 2
           size SIZE, SIZE
+          > .c-thumb-focus
+            border-radius 50%
+            NEGATIVE_MARGIN = 0 - FOCUS_MARGIN
+            abs-pos(NEGATIVE_MARGIN, NEGATIVE_MARGIN, NEGATIVE_MARGIN, NEGATIVE_MARGIN)
+
+        > .c-indeterminate-focus
+          NEGATIVE_MARGIN = 0 - FOCUS_MARGIN
+          abs-pos(NEGATIVE_MARGIN, NEGATIVE_MARGIN, NEGATIVE_MARGIN, NEGATIVE_MARGIN)
+          border-radius ((HEIGHT + (FOCUS_MARGIN * 2)) * 0.5)
+
     &.c-checked
       .c-thumb
         left CHECKED_LEFT
 
+
   &.c-size-22
     line-height 18px
-    groove-size(35px, 22px, 13px)
+    groove-size(35px, 22px, 13px, 6px)
     .c-indeterminate-dot
       size(12, 4)
       top 9px
@@ -128,7 +163,7 @@
 
   &.c-size-34
     line-height 30px
-    groove-size(54px, 34px, 21px)
+    groove-size(54px, 34px, 21px, 12px)
     .c-indeterminate-dot
       size(18, 6)
       top 14px
@@ -156,18 +191,20 @@
     background rgba(black, 0.02)
     border-color rgba(black, 0.08)
     .c-thumb
-      border-color darken(white, 15%)
-      box-shadow 1px 2px 6px 2px rgba(black, 0.1)
+      .c-button
+        border-color darken(white, 15%)
+        box-shadow 1px 2px 6px 2px rgba(black, 0.1)
+    .c-thumb-focus, .c-indeterminate-focus
+      background rgba(black, 0.05)
 
 
   &.c-checked .c-groove
     background GREEN
     border-color GREEN
     .c-thumb
-      border-color white
-      box-shadow 1px 2px 6px 2px rgba(black, 0.2)
-
-
-
-
+      .c-button
+        border-color white
+        box-shadow 1px 2px 6px 2px rgba(black, 0.2)
+    .c-thumb-focus, .c-indeterminate-focus
+      background rgba(GREEN, 0.15)
 

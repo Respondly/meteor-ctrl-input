@@ -1,13 +1,20 @@
 <template name='c-checkbox-slider'>
-  <div class='c-checkbox-slider c-not-checked {{ cssClass }}'>
+  <div
+    class='c-checkbox-slider c-not-checked {{ cssClass }}'
+    tabindex='0'>
 
     {{#if showLeftLabel}}
       <div class='c-label c-left'>{{{ labelLeft }}}</div>
     {{/if}}
 
     <div class='c-groove-outer'>
+
       <div class='c-groove'>
-        <div class='c-thumb'></div>
+        <div class='c-indeterminate-focus'></div>
+        <div class='c-thumb'>
+          <div class='c-thumb-focus'></div>
+          <div class='c-button'></div>
+        </div>
       </div>
       <div class='c-indeterminate-dot'></div>
     </div>
