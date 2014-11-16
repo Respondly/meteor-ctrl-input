@@ -15,6 +15,9 @@ Ctrl.define
           # Setup initial conditions.
           isChecked = @api.isChecked()
           isEnabled = @api.isEnabled()
+          hasLeftLabel = not Util.isBlank(@helpers.labelLeft())
+          hasRightLabel = not Util.isBlank(@helpers.labelRight())
+          hasLabel = hasLeftLabel or hasRightLabel
 
           # Update CSS classes.
           el.toggleClass 'c-checked', isChecked
@@ -22,8 +25,10 @@ Ctrl.define
           el.toggleClass 'c-enabled', isEnabled
           el.toggleClass 'c-disabled', not isEnabled
           el.toggleClass 'c-straddle', @api.straddle()
-          el.toggleClass 'c-has-left-label', not Util.isBlank(@helpers.labelLeft())
-          el.toggleClass 'c-has-right-label', not Util.isBlank(@helpers.labelRight())
+          el.toggleClass 'c-has-label', hasLabel
+          el.toggleClass 'c-has-left-label', hasLeftLabel
+          el.toggleClass 'c-has-right-label', hasRightLabel
+          el.toggleClass 'c-has-message', not Util.isBlank(@helpers.message())
 
           # Size.
           supportedSizes = [22, 34]
