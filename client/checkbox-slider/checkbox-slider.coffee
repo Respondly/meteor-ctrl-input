@@ -14,14 +14,17 @@ Ctrl.define
       @autorun =>
           # Setup initial conditions.
           isChecked = @api.isChecked()
+          isIndeterminate = isChecked is null
+          # isChecked = false if isIndeterminate
           isEnabled = @api.isEnabled()
           hasLeftLabel = not Util.isBlank(@helpers.labelLeft())
           hasRightLabel = not Util.isBlank(@helpers.labelRight())
           hasLabel = hasLeftLabel or hasRightLabel
 
           # Update CSS classes.
-          el.toggleClass 'c-checked', isChecked
-          el.toggleClass 'c-not-checked', not isChecked
+          el.toggleClass 'c-indeterminate', isIndeterminate
+          el.toggleClass 'c-checked', (isChecked and not isIndeterminate)
+          el.toggleClass 'c-not-checked', ((not isChecked) or isIndeterminate)
           el.toggleClass 'c-enabled', isEnabled
           el.toggleClass 'c-disabled', not isEnabled
           el.toggleClass 'c-straddle', @api.straddle()

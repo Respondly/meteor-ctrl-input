@@ -28,6 +28,18 @@
       border solid 1px
       background white
 
+
+  .c-indeterminate-dot
+    abs-center()
+    background rgba(black, 0.15)
+    display none
+  &.c-indeterminate
+    .c-thumb
+      display none
+    .c-indeterminate-dot
+      display block
+
+
   &.c-disabled
     opacity 0.3
     cursor default
@@ -68,6 +80,8 @@
   &.c-size-22
     line-height 18px
     groove-size(35px, 22px, 13px)
+    .c-indeterminate-dot
+      size 10, 3
     .c-label
       font-size 13px
       font-weight 400
@@ -87,6 +101,9 @@
   &.c-size-34
     line-height 30px
     groove-size(54px, 34px, 21px)
+    .c-indeterminate-dot
+      size 15, 5
+
     .c-label
       font-size 18px
       font-weight 300
