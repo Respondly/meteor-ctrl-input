@@ -104,7 +104,7 @@ Ctrl.define
       click: ->
         if @api.isEnabled()
           @api.toggle(wasClicked:true)
-          @api.focus()
+          @ctrl.focus()
 
 
       ###
@@ -154,4 +154,8 @@ Ctrl.define
       'mousedown': (e) ->
         if @api.isClickable()
           @api.click() if e.button is 0
+
+      'keydown': (e) ->
+        if e.which is Const.KEYS.SPACE
+          @api.toggle(wasClicked:true)
 
