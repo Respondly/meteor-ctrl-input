@@ -3,33 +3,10 @@
 
 .c-checkbox
   position relative
-  font-size 14px
   user-select none
-
-  label.checkbox
-    line-height 16px
-
-  .c-label
-    text-transform none
-    font-size 13px
-    font-weight 600
-    padding-left 3px
-    color darken(white, 50%)
-
-
-  &.is-disabled
-    cursor default
-    .c-label, .c-message
-      opacity 0.3
-
 
   &.is-child
     padding-top 12px
-
-  .c-message
-    // See also [common.styl]
-    margin-top 3px
-    padding-left 18px
 
   .c-twisty
     abs-pos -13, 6, null, null
@@ -37,11 +14,11 @@
     opacity 0.3
 
   .c-children
-    margin-left 20px
+    margin-left 42px
     overflow hidden
     height 0
-    label.checkbox
-      margin-bottom 12px
+    .c-checkbox-slider
+      margin-bottom 10px
 
   &.is-loaded
     .c-children

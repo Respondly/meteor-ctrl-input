@@ -20,6 +20,10 @@ Ctrl.define
 
       setLoaded = => @find().addClass 'is-loaded'
 
+      # Keep the API in sync with the UI control.
+      @autorun =>
+        isChecked = @children.chkMain.isChecked()
+        Deps.nonreactive => @api.isChecked(isChecked)
 
       renderChild = (def) =>
           def.ctrl = @appendCtrl('c-checkbox', '> .c-children > .c-inner', data:def)
@@ -190,6 +194,7 @@ Ctrl.define
         isEnabled = @helpers.isEnabled()
         isChecked = @api.isChecked()
         isChild   = @api.isChild()
+        message   = @api.message()
 
         # Inherit parent checkbox values (if this is a sub-checkbox).
         if isChild
@@ -197,22 +202,14 @@ Ctrl.define
 
         # CSS classes.
         if el = @find()
-          el.toggleClass 'is-enabled', isEnabled
-          el.toggleClass 'is-disabled', not isEnabled
           el.toggleClass 'is-child', isChild
 
-
         # Checked state.
-        if chk = @find('> label > input')
-          if isChecked is null
-            chk.prop('indeterminate', isChecked is null)
-            chk.prop('checked', false)
-          else
-            chk.prop('indeterminate', false)
-            chk.prop('checked', isChecked)
-
-        # Enabled state.
-        chk.prop('disabled', not isEnabled)
+        if chk = @children.chkMain
+          console.log 'chk', chk
+          chk.isChecked(isChecked)
+          chk.isEnabled(isEnabled)
+          chk.message(message)
 
         # Open state (when child defs).
         if childDefs = @api.children()

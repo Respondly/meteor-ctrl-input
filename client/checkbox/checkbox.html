@@ -5,20 +5,12 @@
       {{> ctrl type='c-twisty' id='twisty' }}
     {{/if}}
 
-
-
-    <label class='checkbox'>
-      <input type='checkbox' data-uid='{{ uid }}'>
-      <span class='c-label'>{{{ label }}}</span>
-      {{#if showRequired}}
-        <span class='c-required'>*</span>
-      {{/if}}
-      {{#if api.message}}
-        <div class='c-message'>{{{ api.message }}}</div>
-      {{/if}}
-    </label>
-
-
+    {{> ctrl
+          id='chkMain'
+          type='c-checkbox-slider'
+          label=label
+          size=22
+    }}
 
     {{#if api.hasChildren}}
       <div class='c-children'>
@@ -28,3 +20,6 @@
 
   </div>
 </template>
+
+
+
