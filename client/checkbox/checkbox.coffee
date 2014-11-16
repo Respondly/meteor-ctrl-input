@@ -206,7 +206,6 @@ Ctrl.define
 
         # Checked state.
         if chk = @children.chkMain
-          console.log 'chk', chk
           chk.isChecked(isChecked)
           chk.isEnabled(isEnabled)
           chk.message(message)
