@@ -13,6 +13,8 @@
   div
     vertical-align middle
 
+  // ----------------------------------
+
   .c-groove-outer
     position relative
     display inline-block
@@ -29,6 +31,8 @@
       background white
 
 
+  // ----------------------------------
+
   .c-indeterminate-dot
     abs-center()
     background rgba(black, 0.2)
@@ -38,6 +42,9 @@
       display none
     .c-indeterminate-dot
       display block
+
+
+  // ----------------------------------
 
 
   &.c-disabled
@@ -53,6 +60,9 @@
     color darken(white, 65%)
 
 
+  // ----------------------------------
+
+
   // Transitions (after load to avoid slide-movement on first render).
   &.c-animated .c-groove
     transition background-color DURATION, border-color DURATION, opacity DURATION
@@ -60,8 +70,23 @@
       transition background-color DURATION, border-color DURATION, left DURATION
 
 
+  // ----------------------------------
 
-  // Sizes.
+
+  // Straddle toggles.
+  &.c-straddle
+    OPACITY = 0.5
+    &.c-checked
+      .c-label.c-left
+        opacity OPACITY
+    &.c-not-checked
+      .c-label.c-right
+        opacity OPACITY
+
+
+
+  // SIZES ------------------------------------------------------
+
   groove-size(WIDTH, HEIGHT, CHECKED_LEFT)
     min-height HEIGHT
     > .c-groove-outer
@@ -97,6 +122,8 @@
       .c-message
         padding-left 41px
 
+  // ----------------------------------
+
 
   &.c-size-34
     line-height 30px
@@ -120,7 +147,10 @@
         padding-left 62px
 
 
-  // Colors.
+
+  // COLORS ------------------------------------------------------
+
+
   &.c-not-checked .c-groove
     background rgba(black, 0.02)
     border-color rgba(black, 0.08)
@@ -135,16 +165,6 @@
     .c-thumb
       border-color white
       box-shadow 1px 2px 6px 2px rgba(black, 0.2)
-
-  // Straddle toggles.
-  &.c-straddle
-    OPACITY = 0.5
-    &.c-checked
-      .c-label.c-left
-        opacity OPACITY
-    &.c-not-checked
-      .c-label.c-right
-        opacity OPACITY
 
 
 
