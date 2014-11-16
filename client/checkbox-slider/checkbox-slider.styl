@@ -22,14 +22,12 @@
     position relative
     display inline-block
 
-
   .c-groove
     abs-pos 0, 0, null, null
-    border solid 1px
+    .c-groove-bg
+      border solid 1px
     .c-thumb
-      position absolute
-      top 0px
-      left 0px
+      abs-pos 0, 0, 0, 0
       .c-button
         abs-pos()
         border-radius 50%
@@ -73,7 +71,7 @@
 
 
   &.c-disabled
-    opacity 0.3
+    opacity 0.4
     cursor default
 
   .c-label
@@ -117,10 +115,13 @@
     > .c-groove-outer
       size WIDTH, HEIGHT
       > .c-groove
-        size WIDTH - 2, HEIGHT - 2
-        border-radius (HEIGHT * 0.5)
+        size(WIDTH, HEIGHT)
+        .c-groove-bg
+          GROOVE_MARGIN = (HEIGHT / 5)
+          abs-pos 0, GROOVE_MARGIN, 0, GROOVE_MARGIN
+          border-radius ((HEIGHT - (GROOVE_MARGIN * 2)) * 0.5)
         .c-thumb
-          SIZE = HEIGHT - 2
+          SIZE = HEIGHT
           size SIZE, SIZE
           > .c-thumb-focus
             border-radius 50%
@@ -139,7 +140,7 @@
 
   &.c-size-22
     line-height 18px
-    groove-size(35px, 22px, 13px, 6px)
+    groove-size(35px, 22px, 13px, 8px)
     .c-indeterminate-dot
       size(12, 4)
       top 9px
@@ -188,19 +189,21 @@
 
 
   &.c-not-checked .c-groove
-    background rgba(black, 0.02)
-    border-color rgba(black, 0.08)
+    .c-groove-bg
+      background rgba(black, 0.02)
+      border-color rgba(black, 0.08)
     .c-thumb
       .c-button
         border-color darken(white, 15%)
         box-shadow 1px 2px 6px 2px rgba(black, 0.1)
     .c-thumb-focus, .c-indeterminate-focus
-      background rgba(black, 0.05)
+      background rgba(black, 0.03)
 
 
   &.c-checked .c-groove
-    background GREEN
-    border-color GREEN
+    .c-groove-bg
+      background GREEN
+      border-color GREEN
     .c-thumb
       .c-button
         border-color white

@@ -101,7 +101,10 @@ Ctrl.define
       ###
       The result of a click event.
       ###
-      click: -> @api.toggle(wasClicked:true) if @api.isEnabled()
+      click: ->
+        if @api.isEnabled()
+          @api.toggle(wasClicked:true)
+          @api.focus()
 
 
       ###
