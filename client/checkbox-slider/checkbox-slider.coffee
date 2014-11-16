@@ -21,8 +21,8 @@ Ctrl.define
 
           # Update CSS classes.
           el.toggleClass 'c-indeterminate', (isChecked is null)
-          el.toggleClass 'c-checked', (isChecked is true)
-          el.toggleClass 'c-not-checked', (isChecked is false or isChecked is null)
+          el.toggleClass 'c-checked', (isChecked is true or isChecked is null)
+          el.toggleClass 'c-not-checked', (isChecked is false)
           el.toggleClass 'c-enabled', isEnabled
           el.toggleClass 'c-disabled', not isEnabled
           el.toggleClass 'c-straddle', @api.straddle()
