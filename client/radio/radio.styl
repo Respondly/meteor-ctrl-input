@@ -8,7 +8,6 @@
   cursor pointer
   box-sizing border-box
 
-
   &.c-disabled
     opacity 0.4
     cursor default
@@ -43,6 +42,19 @@
 
   // ---------------------------------
 
+  .c-focus
+    opacity 0
+    transition opacity 0.4s
+    border-radius 50%
+    background rgba(black, 0.03)
+
+  &:focus
+    .c-focus
+      opacity 1
+
+
+  // ---------------------------------
+
   .c-label
     display inline-block
     color darken(white, 65%)
@@ -56,23 +68,28 @@
   // SIZES ------------------------------------------------------
 
 
-  bullet-size(SIZE, BORDER_WIDTH, CHECKED_SIZE)
+  bullet-size(SIZE, BORDER_WIDTH, CHECKED_SIZE, FOCUS_MARGIN)
     min-height SIZE
     > .c-bullet-outer
       size(SIZE, SIZE)
       > .c-bullet
         BULLET_SIZE = SIZE - (BORDER_WIDTH * 2)
         size(BULLET_SIZE)
-        border-size BORDER_WIDTH
+        border-width BORDER_WIDTH
         > .c-bullet-checked
           size(CHECKED_SIZE)
           EDGE = (BULLET_SIZE - CHECKED_SIZE) / 2
           abs-pos(EDGE, EDGE, null, null)
 
+      > .c-focus
+        NEGATIVE_MARGIN = 0 - FOCUS_MARGIN
+        abs-pos(NEGATIVE_MARGIN, NEGATIVE_MARGIN, NEGATIVE_MARGIN, NEGATIVE_MARGIN)
+
+
   // ----------------------------------
 
   &.c-size-22
-    bullet-size(22px, 2px, 12px)
+    bullet-size(22px, 2px, 12px, 8px)
     padding-left 30px
     line-height 18px
     .c-label
@@ -86,7 +103,7 @@
   // ----------------------------------
 
   &.c-size-34
-    bullet-size(34px, 4px, 18px)
+    bullet-size(34px, 4px, 18px, 12px)
     padding-left 40px
     line-height 28px
     .c-label
@@ -100,12 +117,14 @@
 
   // COLORS ------------------------------------------------------
 
-  &.c-not-checked .c-bullet
-    border-color rgba(black, 0.2)
+  &.c-not-checked
+    .c-bullet
+      border-color rgba(black, 0.2)
 
-  &.c-checked .c-bullet
-    border-color GREEN
-    background white
+  &.c-checked
+    .c-bullet
+      border-color GREEN
+      background white
 
 
 
