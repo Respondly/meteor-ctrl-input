@@ -64,7 +64,7 @@ Ctrl.define
       ###
       click: ->
         if @api.isEnabled()
-          @api.toggle(wasClicked:true)
+          @api.isChecked(true, wasClicked:true) unless @api.isChecked()
           @ctrl.focus()
 
 
