@@ -48,18 +48,18 @@ Ctrl.define
 
 
     api:
-      isEnabled:    (value) -> @prop 'enabled', value, default:@defaultValue('isEnabled', true)
-      isClickable:  (value) -> @prop 'isClickable', value, default:@defaultValue('isClickable', true)
-      size:         (value) -> @prop 'size', value, default:@defaultValue('size', 22)
+      isEnabled:    (value) -> @prop 'enabled', value, default:true
+      isClickable:  (value) -> @prop 'isClickable', value, default:true
+      size:         (value) -> @prop 'size', value, default:22
 
-      label:        (value) -> @prop 'label', value, default:@defaultValue('label', null)
-      onLabel:      (value) -> @prop 'onLabel', value, default:@defaultValue('onLabel', null)
-      offLabel:     (value) -> @prop 'offLabel', value, default:@defaultValue('offLabel', null)
-      straddle:     (value) -> @prop 'straddle', value, default:@defaultValue('straddle', false)
+      label:        (value) -> @prop 'label', value, default:null
+      onLabel:      (value) -> @prop 'onLabel', value, default:null
+      offLabel:     (value) -> @prop 'offLabel', value, default:null
+      straddle:     (value) -> @prop 'straddle', value, default:false
 
-      message:      (value) -> @prop 'message', value, default:@defaultValue('message', null)
-      onMessage:    (value) -> @prop 'onMessage', value, default:@defaultValue('onMessage', null)
-      offMessage:   (value) -> @prop 'offMessage', value, default:@defaultValue('offMessage', null)
+      message:      (value) -> @prop 'message', value, default:null
+      onMessage:    (value) -> @prop 'onMessage', value, default:null
+      offMessage:   (value) -> @prop 'offMessage', value, default:null
 
 
       ###
