@@ -48,18 +48,18 @@ Ctrl.define
 
 
     api:
-      isEnabled:    (value) -> @prop 'enabled', value, default:@defaultValue('isEnabled', true), onlyOnChange:true
-      isClickable:  (value) -> @prop 'isClickable', value, default:@defaultValue('isClickable', true), onlyOnChange:true
-      size:         (value) -> @prop 'size', value, default:@defaultValue('size', 22), onlyOnChange:true
+      isEnabled:    (value) -> @prop 'enabled', value, default:@defaultValue('isEnabled', true)
+      isClickable:  (value) -> @prop 'isClickable', value, default:@defaultValue('isClickable', true)
+      size:         (value) -> @prop 'size', value, default:@defaultValue('size', 22)
 
-      label:        (value) -> @prop 'label', value, default:@defaultValue('label', null), onlyOnChange:true
-      onLabel:      (value) -> @prop 'onLabel', value, default:@defaultValue('onLabel', null), onlyOnChange:true
-      offLabel:     (value) -> @prop 'offLabel', value, default:@defaultValue('offLabel', null), onlyOnChange:true
-      straddle:     (value) -> @prop 'straddle', value, default:@defaultValue('straddle', false), onlyOnChange:true
+      label:        (value) -> @prop 'label', value, default:@defaultValue('label', null)
+      onLabel:      (value) -> @prop 'onLabel', value, default:@defaultValue('onLabel', null)
+      offLabel:     (value) -> @prop 'offLabel', value, default:@defaultValue('offLabel', null)
+      straddle:     (value) -> @prop 'straddle', value, default:@defaultValue('straddle', false)
 
-      message:      (value) -> @prop 'message', value, default:@defaultValue('message', null), onlyOnChange:true
-      onMessage:    (value) -> @prop 'onMessage', value, default:@defaultValue('onMessage', null), onlyOnChange:true
-      offMessage:   (value) -> @prop 'offMessage', value, default:@defaultValue('offMessage', null), onlyOnChange:true
+      message:      (value) -> @prop 'message', value, default:@defaultValue('message', null)
+      onMessage:    (value) -> @prop 'onMessage', value, default:@defaultValue('onMessage', null)
+      offMessage:   (value) -> @prop 'offMessage', value, default:@defaultValue('offMessage', null)
 
 
       ###
@@ -70,7 +70,7 @@ Ctrl.define
                 - wasClicked: (optional) Flag indicating if the change originated from a click event.
       ###
       isChecked: (value, options = {}) ->
-        result = @prop 'checked', value, default:@defaultValue('isChecked', false), onlyOnChange:true
+        result = @prop 'isChecked', value, default:true
         if value isnt undefined
           if options.silent isnt true and (@_lastIsChecked isnt value)
             args =
@@ -156,6 +156,5 @@ Ctrl.define
           @api.click() if e.button is 0
 
       'keydown': (e) ->
-        if e.which is Const.KEYS.SPACE
-          @api.toggle(wasClicked:true)
+        @api.click() if e.which is Const.KEYS.SPACE
 

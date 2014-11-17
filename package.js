@@ -19,6 +19,7 @@ Package.on_use(function (api) {
   api.add_files('client/textboxes/raw-textbox/raw-textbox.html', 'client');
   api.add_files('client/textboxes/text-input/text-input.html', 'client');
   api.add_files('client/checkbox/checkbox.html', 'client');
+  api.add_files('client/radio/radio.html', 'client');
   api.add_files('client/checkbox-slider/checkbox-slider.html', 'client');
   api.add_files('client/textboxes/content-editable/lib/js/medium-editor.js', 'client');
   api.add_files('client/textboxes/content-editable/lib/css/medium-editor.css', 'client');
@@ -27,15 +28,17 @@ Package.on_use(function (api) {
   api.add_files('client/textboxes/content-editable/ctrl/content-editable.styl', 'client');
   api.add_files('client/textboxes/raw-textbox/raw-textbox.coffee', 'client');
   api.add_files('client/textboxes/raw-textbox/raw-textbox.styl', 'client');
-  api.add_files('client/textboxes/content-editable/content-editable-controller.coffee', 'client');
-  api.add_files('client/textboxes/content-editable/css.styl', 'client');
   api.add_files('client/textboxes/validation/email_validator.coffee', 'client');
   api.add_files('client/textboxes/validation/screen_name_validator.coffee', 'client');
+  api.add_files('client/textboxes/content-editable/content-editable-controller.coffee', 'client');
+  api.add_files('client/textboxes/content-editable/css.styl', 'client');
   api.add_files('client/textboxes/text-input/text-input.coffee', 'client');
   api.add_files('client/textboxes/text-input/text-input.styl', 'client');
   api.add_files('client/checkbox/checkbox.coffee', 'client');
   api.add_files('client/checkbox/checkbox.styl', 'client');
   api.add_files('client/textboxes/textbox-date.coffee', 'client');
+  api.add_files('client/radio/radio.coffee', 'client');
+  api.add_files('client/radio/radio.styl', 'client');
   api.add_files('client/checkbox-slider/checkbox-slider.coffee', 'client');
   api.add_files('client/checkbox-slider/checkbox-slider.styl', 'client');
   api.add_files('client/common.styl', 'client');
