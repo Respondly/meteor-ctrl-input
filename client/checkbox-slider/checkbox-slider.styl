@@ -28,6 +28,7 @@
       border solid 1px
     .c-thumb
       abs-pos 0, 0, 0, 0
+      transition opacity DURATION
       .c-button
         abs-pos()
         border-radius 50%
@@ -35,12 +36,13 @@
         background white
 
 
+
   // FOCUS ----------------------------------
 
   .c-thumb-focus, .c-indeterminate-focus
     transition background-color DURATION
     opacity 0
-    transition opacity DURATION
+    transition opacity 0.4s
 
   &:focus
     .c-thumb-focus
@@ -58,13 +60,14 @@
 
   .c-indeterminate-dot
     abs-center-x()
-    background rgba(black, 0.2)
-    display none
+    background rgba(black, 0.15)
+    opacity 0
+    transition opacity DURATION
   &.c-indeterminate
     .c-thumb
-      display none
+      opacity 0
     .c-indeterminate-dot
-      display block
+      opacity 1
 
 
   // ----------------------------------
