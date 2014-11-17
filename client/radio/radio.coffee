@@ -15,13 +15,15 @@ Ctrl.define
           unless (supportedSizes.any (item) -> item is size)
             throw new Error("Size '#{ size }' not supported. Use one of: #{ supportedSizes }")
 
-    ready: ->
-
 
     api:
       isEnabled:    (value) -> @prop 'isEnabled', value, default:true
-      size:         (value) -> @prop 'size', value, default:@defaultValue('size', 22)
-      isClickable:  (value) -> @prop 'isClickable', value, default:@defaultValue('isClickable', true)
+      size:         (value) -> @prop 'size', value, default:22
+      isClickable:  (value) -> @prop 'isClickable', value, default:true
+
+      label: (value) -> @prop 'label', value, default:null
+      message: (value) -> @prop 'message', value, default:null
+
 
       ###
       Gets or sets whether the checkbox is checked.
@@ -70,7 +72,7 @@ Ctrl.define
       cssClass: ->
         isChecked = @api.isChecked()
         isEnabled = @api.isEnabled()
-        css = ''
+        css = "c-size-#{ @api.size() }"
         css += ' c-checked' if isChecked
         css += ' c-not-checked' if isChecked is false
         css += ' c-enabled' if isEnabled

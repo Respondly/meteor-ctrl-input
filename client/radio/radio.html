@@ -1,9 +1,13 @@
 <template name='c-radio'>
-  <div
-    class='c-radio {{ cssClass }}'
-    tabindex='0'>
+  <div class='c-radio {{ cssClass }}'
+       tabindex='0'>
 
-    <code>{{ instance }}</code>
+    <div class='c-bullet-outer'>
+      <div class='c-bullet'></div>
+    </div>
+
+    <div class='c-label'>{{ api.label }}</div>
+    <div class='c-message'>{{ api.message }}</div>
 
   </div>
 </template>

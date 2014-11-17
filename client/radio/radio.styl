@@ -2,5 +2,79 @@
 
 
 .c-radio
+  GREEN = #4cd864
   background $RED
   outline none
+  display inline-block
+  cursor pointer
+
+
+  &.c-disabled
+    opacity 0.4
+    cursor default
+
+
+  // ---------------------------------
+
+  .c-bullet-outer
+    abs-pos 0, 0, null, null
+    display inline-block
+    background $RED
+
+
+  .c-bullet
+    abs-pos 0, 0, 0, 0
+    border-radius 50%
+    background $RED
+
+
+  // ---------------------------------
+
+  .c-label
+    display inline-block
+    color darken(white, 65%)
+    vertical-align middle
+
+  .c-message
+    color darken(white, 65%)
+
+
+
+  // SIZES ------------------------------------------------------
+
+
+  bullet-size(SIZE)
+    min-height SIZE
+    > .c-bullet-outer
+      size(SIZE, SIZE)
+      > .c-bullet
+        size(SIZE, SIZE)
+
+  // ----------------------------------
+
+  &.c-size-22
+    bullet-size(22px)
+    padding-left 28px
+    line-height 18px
+    .c-label
+      font-size 14px
+      font-weight 400
+    .c-message
+      font-size 12px
+      line-height 16px
+      margin-top 6px
+
+  // ----------------------------------
+
+  &.c-size-34
+    bullet-size(34px)
+    padding-left 40px
+    line-height 28px
+    .c-label
+      font-size 18px
+      font-weight 300
+    .c-message
+      font-size 14px
+      line-height 18px
+      margin-top 8px
+
