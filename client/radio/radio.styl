@@ -3,10 +3,10 @@
 
 .c-radio
   GREEN = #4cd864
-  background $RED
   outline none
   display inline-block
   cursor pointer
+  box-sizing border-box
 
 
   &.c-disabled
@@ -19,13 +19,26 @@
   .c-bullet-outer
     abs-pos 0, 0, null, null
     display inline-block
-    background $RED
 
 
   .c-bullet
     abs-pos 0, 0, 0, 0
     border-radius 50%
-    background $RED
+    border-style solid
+
+
+  .c-bullet-checked
+    border-radius 50%
+    background GREEN
+    opacity 0
+    transform scale(0.7)
+    DURATION = 0.2s
+    transition opacity DURATION, transform DURATION
+
+  &.c-checked
+    .c-bullet-checked
+      opacity 1
+      transform scale(1)
 
 
   // ---------------------------------
@@ -43,18 +56,24 @@
   // SIZES ------------------------------------------------------
 
 
-  bullet-size(SIZE)
+  bullet-size(SIZE, BORDER_WIDTH, CHECKED_SIZE)
     min-height SIZE
     > .c-bullet-outer
       size(SIZE, SIZE)
       > .c-bullet
-        size(SIZE, SIZE)
+        BULLET_SIZE = SIZE - (BORDER_WIDTH * 2)
+        size(BULLET_SIZE)
+        border-size BORDER_WIDTH
+        > .c-bullet-checked
+          size(CHECKED_SIZE)
+          EDGE = (BULLET_SIZE - CHECKED_SIZE) / 2
+          abs-pos(EDGE, EDGE, null, null)
 
   // ----------------------------------
 
   &.c-size-22
-    bullet-size(22px)
-    padding-left 28px
+    bullet-size(22px, 2px, 12px)
+    padding-left 30px
     line-height 18px
     .c-label
       font-size 14px
@@ -67,7 +86,7 @@
   // ----------------------------------
 
   &.c-size-34
-    bullet-size(34px)
+    bullet-size(34px, 4px, 18px)
     padding-left 40px
     line-height 28px
     .c-label
@@ -77,4 +96,17 @@
       font-size 14px
       line-height 18px
       margin-top 8px
+
+
+  // COLORS ------------------------------------------------------
+
+  &.c-not-checked .c-bullet
+    border-color rgba(black, 0.2)
+
+  &.c-checked .c-bullet
+    border-color GREEN
+    background white
+
+
+
 
