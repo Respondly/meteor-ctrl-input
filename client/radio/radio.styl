@@ -25,6 +25,7 @@
     abs-pos 0, 0, 0, 0
     border-radius 50%
     border-style solid
+    transition border-color 0.1s
 
 
   .c-bullet-checked
@@ -121,6 +122,11 @@
   &.c-not-checked
     .c-bullet
       border-color rgba(black, 0.2)
+
+  &.c-not-checked:hover
+    .c-bullet
+      border-color rgba(black, 0.3)
+
 
   &.c-checked
     .c-bullet
