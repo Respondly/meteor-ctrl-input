@@ -1,12 +1,12 @@
 ###
-A rounded checkbox (like iOS).
+A rounded checkbox (like iOS / Google Material).
 
 Events:
   - changed
 
 ###
 Ctrl.define
-  'c-checkbox-slider':
+  'c-checkbox':
     ready: ->
       el = @find()
 
