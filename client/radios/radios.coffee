@@ -1,19 +1,28 @@
 ###
 A set of radio buttons.
-
 ###
 Ctrl.define
   'c-radios':
     init: -> @items = []
 
+
     ready: ->
       @autorun => @helpers.updateState()
+      @__internal__.keyHandle = Util.keyboard.keyDown (e) =>
+          @api.selectPrevious() if e.is.up
+          @api.selectNext() if e.is.down
+
+
+    destroyed: ->
+      @__internal__.keyHandle?.dispose()
+
 
 
     api:
       isEnabled: (value) -> @prop 'isEnabled', value, default:true
       size:      (value) -> @prop 'size', value, default:22
       count:     (value) -> @prop 'count', value, default:0
+
 
       ###
       Gets or sets the currently selected value.
@@ -24,16 +33,63 @@ Ctrl.define
           @helpers.selectedItem(@helpers.itemFromValue(value))
 
         # Read.
-        @helpers.selectedItem()?.api.value
+        @api.selectedItem()?.value
 
 
 
+      ###
+      Gets the selected item.
+      ###
+      selectedItem: -> @helpers.selectedItem()?.api
+
+
+      ###
+      Gets the set of radio buttons.
+      ###
       items: ->
         @api.count() # Hook into reactive callback.
         @items.map (item) -> item.api
 
 
-      focus: -> @api.items().first()?.focus()
+      ###
+      Assigns focus to the first radio button.
+      ###
+      focus: ->
+        if not @ctrl.hasFocus()
+          @api.items().first()?.focus()
+
+
+      ###
+      Moves selection to the next radio button.
+      ###
+      selectNext: ->
+        items = @api.items()
+        return if items.length is 0
+        selectedItem = @helpers.selectedItem()
+        index = selectedItem?.api.index() ? -1
+        index += 1
+        index = items.length - 1 if index >= items.length
+        items[index]?.select()
+        if selectedItem?.ctrl.hasFocus()
+          items[index].focus()
+
+
+      ###
+      Moves selection to the previous radio button.
+      ###
+      selectPrevious: ->
+        items = @api.items()
+        return if items.length is 0
+        selectedItem = @helpers.selectedItem()
+        index = selectedItem?.api.index() ? items.length
+        index -= 1
+        index = 0 if index < 0
+        items[index]?.select()
+        if selectedItem?.ctrl.hasFocus()
+          items[index].focus()
+
+
+
 
 
 
@@ -132,10 +188,10 @@ createItem = (instance, options) ->
       id:id
       value: options.value
       index: -> instance.items.indexOf(item)
-      isChecked: -> ctrl?.isChecked()
       focus: -> ctrl.focus()
       remove: -> instance.api.removeAt(@index())
-
+      isChecked: (value) -> ctrl?.isChecked(value)
+      select: -> item.api.isChecked(true)
 
   # Monitor selection state.
   handle = Deps.autorun ->
