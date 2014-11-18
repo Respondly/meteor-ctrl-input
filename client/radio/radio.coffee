@@ -77,8 +77,8 @@ Ctrl.define
         css += ' c-not-checked' if isChecked is false
         css += ' c-enabled' if isEnabled
         css += ' c-disabled' if not isEnabled
-
         css
+
 
     events:
       'mousedown': (e) ->
