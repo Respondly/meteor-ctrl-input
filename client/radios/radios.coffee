@@ -1,5 +1,9 @@
 ###
 A set of radio buttons.
+
+Events:
+  changed
+
 ###
 Ctrl.define
   'c-radios':
@@ -7,14 +11,27 @@ Ctrl.define
 
 
     ready: ->
+      # Keep the visual state in sync.
       @autorun => @helpers.updateState()
+
+      # UP/DOWN keyboard events.
       @__internal__.keyHandle = Util.keyboard.keyDown (e) =>
           @api.selectPrevious() if e.is.up
           @api.selectNext() if e.is.down
 
+      # Alert listeners of changes.
+      @autorun =>
+          value = @api.value()
+          @trigger('changed', { value:value })
+          @__internal__.binder?.onCtrlChanged(value)
+
+          # console.log 'value', value
+
+
 
     destroyed: ->
       @__internal__.keyHandle?.dispose()
+      @__internal__.binder?.dispose()
 
 
 
@@ -34,6 +51,14 @@ Ctrl.define
 
         # Read.
         @api.selectedItem()?.value
+
+
+      ###
+      See [Ctrls.DataBinder].
+      ###
+      bind: (propertyName, modelFactory) ->
+        @__internal__.binder?.dispose()
+        @__internal__.binder = new Ctrls.DataBinder(@ctrl, 'value', propertyName, modelFactory)
 
 
 
@@ -89,8 +114,24 @@ Ctrl.define
           items[index].focus()
 
 
+      ###
+      Selects the first radio button.
+      ###
+      selectFirst: -> @api.items().first()?.select()
 
 
+
+      ###
+      Selects the last radio button.
+      ###
+      selectLast: -> @api.items().last()?.select()
+
+
+      ###
+      Selects the given index.
+      @param index: The index to select.
+      ###
+      select: (index) -> @api.items()[index]?.select()
 
 
       ###

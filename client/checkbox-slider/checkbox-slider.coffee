@@ -47,6 +47,10 @@ Ctrl.define
       Util.delay => el.addClass('c-animated')
 
 
+    destroyed: ->
+      @__internal__.binder?.dispose()
+
+
     api:
       isEnabled:    (value) -> @prop 'enabled', value, default:true
       isClickable:  (value) -> @prop 'isClickable', value, default:true
