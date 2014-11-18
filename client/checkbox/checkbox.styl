@@ -5,16 +5,19 @@
   position relative
   user-select none
 
-  &.is-child
-    padding-top 12px
-
   .c-twisty
     abs-pos -13, 8, null, null
     cursor pointer
     opacity 0.3
 
+  &.is-child
+    padding-top 12px
+    .c-twisty
+      display none
+
+
   .c-children
-    margin-left 42px
+    padding-left 42px
     overflow hidden
     height 0
     .c-checkbox-slider
