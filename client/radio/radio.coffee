@@ -79,6 +79,9 @@ Ctrl.define
         css += ' c-disabled' if not isEnabled
         css
 
+      isLabelCtrl: -> @api.label()?.tmpl?
+      isMessageCtrl: -> @api.label()?.tmpl?
+
 
     events:
       'mousedown': (e) ->

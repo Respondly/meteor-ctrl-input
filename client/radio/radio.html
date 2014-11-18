@@ -9,8 +9,20 @@
       </div>
     </div>
 
-    <div class='c-label'>{{ api.label }}</div>
-    <div class='c-message'>{{ api.message }}</div>
+    {{#if api.label}}
+      {{#if isLabelCtrl}}
+        {{> ctrl type=api.label.tmpl data=api.label.data }}
+      {{else}}
+        <div class='c-label'>{{ api.label }}</div>
+      {{/if}}
+    {{/if}}
 
+    {{#if api.message}}
+      {{#if isMessageCtrl}}
+        {{> ctrl type=api.message.tmpl data=api.message.data }}
+      {{else}}
+        <div class='c-message'>{{ api.message }}</div>
+      {{/if}}
+    {{/if}}
   </div>
 </template>
