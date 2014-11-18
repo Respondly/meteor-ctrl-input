@@ -16,16 +16,15 @@ Ctrl.define
 
       # UP/DOWN keyboard events.
       @__internal__.keyHandle = Util.keyboard.keyDown (e) =>
-          @api.selectPrevious() if e.is.up
-          @api.selectNext() if e.is.down
+          if @ctrl.hasFocus()
+            @api.selectPrevious() if e.is.up
+            @api.selectNext() if e.is.down
 
       # Alert listeners of changes.
       @autorun =>
           value = @api.value()
           @trigger('changed', { value:value })
           @__internal__.binder?.onCtrlChanged(value)
-
-          # console.log 'value', value
 
 
 
