@@ -6,7 +6,7 @@ Events:
 
 ###
 Ctrl.define
-  'c-checkbox':
+  'c-checkbox-tree':
     init: ->
       @helpers.triggerChanged = @helpers.triggerChanged.debounce()
 
@@ -26,7 +26,7 @@ Ctrl.define
         Deps.nonreactive => @api.isChecked(isChecked)
 
       renderChild = (def) =>
-          def.ctrl = @appendCtrl('c-checkbox', '> .c-children > .c-inner', data:def)
+          def.ctrl = @appendCtrl('c-checkbox-tree', '> .c-children > .c-inner', data:def)
 
           onChildChanged = (e) =>
               e.parent = @ctrl
