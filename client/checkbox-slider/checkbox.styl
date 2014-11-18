@@ -17,7 +17,6 @@
 
   // ----------------------------------
 
-
   .c-groove-outer
     position relative
     display inline-block
@@ -34,7 +33,6 @@
         border-radius 50%
         border solid 1px
         background white
-
 
 
   // FOCUS ----------------------------------
@@ -191,27 +189,34 @@
 
   // COLORS ------------------------------------------------------
 
+  // Unchecked -------------------------
+  &.c-not-checked
+    .c-groove
+      .c-groove-bg
+        background rgba(black, 0.02)
+        border-color rgba(black, 0.08)
+      .c-thumb
+        .c-button
+          border-color darken(white, 15%)
+          box-shadow 1px 2px 6px 2px rgba(black, 0.1)
+      .c-thumb-focus, .c-indeterminate-focus
+        background rgba(black, 0.03)
 
-  &.c-not-checked .c-groove
-    .c-groove-bg
-      background rgba(black, 0.02)
-      border-color rgba(black, 0.08)
-    .c-thumb
-      .c-button
-        border-color darken(white, 15%)
-        box-shadow 1px 2px 6px 2px rgba(black, 0.1)
-    .c-thumb-focus, .c-indeterminate-focus
-      background rgba(black, 0.03)
+
+  // Checked -------------------------
+  &.c-checked
+    .c-groove
+      .c-groove-bg
+        background GREEN
+        border-color GREEN
+      .c-thumb
+        .c-button
+          border-color white
+          box-shadow 1px 2px 6px 2px rgba(black, 0.2)
+      .c-thumb-focus, .c-indeterminate-focus
+        background rgba(GREEN, 0.15)
 
 
-  &.c-checked .c-groove
-    .c-groove-bg
-      background GREEN
-      border-color GREEN
-    .c-thumb
-      .c-button
-        border-color white
-        box-shadow 1px 2px 6px 2px rgba(black, 0.2)
-    .c-thumb-focus, .c-indeterminate-focus
-      background rgba(GREEN, 0.15)
+
+
 
