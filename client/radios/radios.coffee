@@ -195,11 +195,16 @@ Ctrl.define
         size = @api.size()
         selectedItem = @helpers.selectedItem()
 
-        for item in @items
+        isItemEnabled = (item) ->
+            return false unless isEnabled
+            item.api.isEnabled()
+
+        for item in @items.compact()
           radioCtrl = item.ctrl
-          radioCtrl.isEnabled(isEnabled)
           radioCtrl.size(size)
           radioCtrl.isChecked((item.id is selectedItem?.id) ? false)
+          radioCtrl.isEnabled(isItemEnabled(item))
+
 
 
 
@@ -212,12 +217,15 @@ Ctrl.define
 createItem = (instance, options) ->
   id = options.id ? _.uniqueId('rdo')
   ctrl = null
+  defaultIsEnabled = options.isEnabled ? true
 
   # Render the radio button.
   data =
-    label:    options.label ? 'Unnamed'
-    message:  options.message
-    size:     instance.api.size()
+    label:      options.label ? 'Unnamed'
+    message:    options.message
+    size:       instance.api.size()
+    isChecked:  options.isChecked
+    isEnabled:  defaultIsEnabled
   ctrl = instance.appendCtrl 'c-radio', instance.el(), data:data
   ctrl.onDestroyed -> handle?.stop()
 
@@ -230,8 +238,9 @@ createItem = (instance, options) ->
       index: -> instance.items.indexOf(item)
       focus: -> ctrl.focus()
       remove: -> instance.api.removeAt(@index())
-      isChecked: (value) -> ctrl?.isChecked(value)
       select: -> item.api.isChecked(true)
+      isChecked: (value) -> ctrl?.isChecked(value)
+      isEnabled: (value) -> instance.prop "isEnabled:#{ id }", value, default:defaultIsEnabled
 
   # Monitor selection state.
   handle = Deps.autorun ->
