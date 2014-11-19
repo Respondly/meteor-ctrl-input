@@ -154,10 +154,9 @@ Ctrl.define
         @api.count(@items.length)
 
         # Set initial selection state.
-        isChecked = options.isChecked is true
-        isChecked = true is not @helpers.selectedItem()? and options.value is undefined
+        isChecked = options.isChecked
+        isChecked = true if not @helpers.selectedItem()? and options.value is undefined
         item.api.select() if isChecked
-
 
 
       ###
