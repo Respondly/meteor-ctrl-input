@@ -28,11 +28,11 @@ Ctrl.define
             @api.selectNext() if e.is.down
 
       # Alert listeners of changes.
-      @autorun =>
-          value = @api.value()
+      alertListeners = (value) =>
           @trigger('changed', { value:value })
           @__internal__.binder?.onCtrlChanged(value)
-
+      alertListeners = alertListeners.debounce()
+      @autorun => alertListeners(@api.value())
 
 
 
