@@ -1,3 +1,6 @@
+
+console.log 'TODO - Fix data-binder to not ignore changes when Ctrl is focused.'
+
 ###
 Binds changes between a model and a UI control.
 ###
@@ -11,13 +14,22 @@ class Ctrls.DataBinder extends AutoRun
   ###
   constructor: (@ctrl, @ctrlPropName, @modelPropName, @modelFactory) ->
     super
+    isInitialized = false
 
     syncCtrlWithModel = =>
           if model = @model()
+            # Calculate the to/from values.
             to = model.changes()?[@modelPropName]?.to ? @modelProp()
-            from = Deps.nonreactive => @ctrlProp()
-            if (to isnt from) and not @ctrl.hasFocus()
-              @ctrlProp(to) unless @ctrlProp() is to
+            from = Deps.nonreactive => @readCtrlProp()
+
+            # Determine whether the UI control should be updated.
+            updateCtrl = (to isnt from) and not @ctrl.hasFocus()
+            updateCtrl = true if not isInitialized
+
+            if updateCtrl
+              if (@readCtrlProp() isnt to) or not isInitialized
+                @writeCtrlProp(to) if updateCtrl
+
 
     # SYNC: Update the UI control when the saved model property is updated.
     @autorun => syncCtrlWithModel()
@@ -34,6 +46,8 @@ class Ctrls.DataBinder extends AutoRun
               # The changes have been reset, sync the control.
               syncCtrlWithModel()
 
+    # Finish up.
+    isInitialized = true
 
 
   ###
@@ -49,9 +63,24 @@ class Ctrls.DataBinder extends AutoRun
 
 
   ###
-  Gets or sets the property on UI control.
+  Gets the property on UI control.
   ###
-  ctrlProp: (value) -> @ctrl[@ctrlPropName](value)
+  readCtrlProp: -> @ctrl[@ctrlPropName]()
+
+  ###
+  Write the value to the UI control.
+  ###
+  writeCtrlProp: (value) ->
+    propFunc = @ctrl[@ctrlPropName]
+    if value is undefined
+      unless Object.isFunction(propFunc.delete)
+        throw new Error("Cannot set property '#{ @ctrlPropName }' to undefined, there is no delete method.")
+      propFunc.delete()
+    else
+      propFunc(value)
+
+
+
 
 
   ###
