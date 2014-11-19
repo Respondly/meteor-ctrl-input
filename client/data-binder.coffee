@@ -16,7 +16,7 @@ class Ctrls.DataBinder extends AutoRun
     syncCtrlWithModel = =>
           if model = @model()
             # Calculate the to/from values.
-            to = model.changes()?[@modelPropName]?.to ? @modelProp()
+            to = model.changes()?[@modelPropName]?.to ? @readModelProp()
             from = Deps.nonreactive => @readCtrlProp()
 
             # Determine whether the UI control should be updated.
@@ -27,7 +27,6 @@ class Ctrls.DataBinder extends AutoRun
             if updateCtrl
               if (@readCtrlProp() isnt to) or not isInitialized
                 @writeCtrlProp(to)
-
 
     # SYNC: Update the UI control when the saved model property is updated.
     @autorun => syncCtrlWithModel()
@@ -55,15 +54,26 @@ class Ctrls.DataBinder extends AutoRun
 
 
   ###
-  Gets or sets the property on model.
+  Gets the property on model.
   ###
-  modelProp: (value) -> @model()[@modelPropName](value)
+  readModelProp: -> @model()[@modelPropName]()
+
+
+  ###
+  Sets the property on model.
+  ###
+  writeModelProp: (value) ->
+    if value is undefined
+      @model()[@modelPropName].delete()
+    else
+      @model()[@modelPropName](value)
 
 
   ###
   Gets the property on UI control.
   ###
   readCtrlProp: -> @ctrl[@ctrlPropName]()
+
 
   ###
   Write the value to the UI control.
@@ -87,5 +97,5 @@ class Ctrls.DataBinder extends AutoRun
   ###
   onCtrlChanged: (toValue) ->
     # Update the model when the UI control changes.
-    @modelProp(toValue)
+    @writeModelProp(toValue)
 
