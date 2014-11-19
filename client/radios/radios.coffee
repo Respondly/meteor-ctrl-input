@@ -7,7 +7,14 @@ Events:
 ###
 Ctrl.define
   'c-radios':
-    init: -> @items = []
+    init: ->
+      @items = []
+
+      # Provide a way for the value to be reset to [undefined]
+      # NB: This is used by the data-binder.
+      @ctrl.value.delete = =>
+          item = @helpers.itemFromValue(undefined)
+          @helpers.selectedItem(item)
 
 
     ready: ->
@@ -25,6 +32,7 @@ Ctrl.define
           value = @api.value()
           @trigger('changed', { value:value })
           @__internal__.binder?.onCtrlChanged(value)
+
 
 
 
