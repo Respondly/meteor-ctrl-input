@@ -13,8 +13,12 @@ Ctrl.define
       # Provide a way for the value to be reset to [undefined]
       # NB: This is used by the data-binder.
       @ctrl.value.delete = =>
-          item = @helpers.itemFromValue(undefined)
-          @helpers.selectedItem(item)
+          if item = @helpers.itemFromValue(undefined)
+            # Select the item that has an 'undefined' value.
+            @helpers.select(item)
+          else
+            # Deselect all radios.
+            @helpers.unselect()
 
 
     ready: ->
@@ -26,14 +30,6 @@ Ctrl.define
           if @ctrl.hasFocus()
             @api.selectPrevious() if e.is.up
             @api.selectNext() if e.is.down
-
-      # Alert listeners of changes.
-      alertListeners = (value) =>
-          @trigger('changed', { value:value })
-          @__internal__.binder?.onCtrlChanged(value)
-      alertListeners = alertListeners.debounce()
-      @autorun => alertListeners(@api.value())
-
 
 
     destroyed: ->
@@ -88,7 +84,8 @@ Ctrl.define
       ###
       focus: ->
         if not @ctrl.hasFocus()
-          @api.items().first()?.focus()
+          item = @api.selectedItem() ? @api.items().first()
+          item?.focus()
 
 
       ###
@@ -144,15 +141,22 @@ Ctrl.define
       ###
       Adds a new radio button to the set.
       @param options:
-                - id:       Optional
-                - value:    Optional
-                - label:    Optional
-                - message:  Optional
+                - id          Optional
+                - value       Optional
+                - label       Optional
+                - message     Optional
+                - isChecked   Optional
+                - isEnabled   Optional
       ###
       add: (options = {}) ->
         item = createItem(@, options)
         @items.push(item)
         @api.count(@items.length)
+
+        # Set initial selection state.
+        isChecked = options.isChecked is true
+        isChecked = true is not @helpers.selectedItem()? and options.value is undefined
+        item.api.select() if isChecked
 
 
 
@@ -179,6 +183,23 @@ Ctrl.define
     helpers:
       selectedItem: (value) -> @prop 'selectedItem', value
 
+      select: (item) ->
+        @helpers.selectedItem(item)
+        @helpers.updateState()
+
+        # Alert listeners of changes.
+        value = @api.value()
+        @trigger('changed', { value:value })
+        @__internal__.binder?.onCtrlChanged(value)
+
+
+      unselect: ->
+        if item = @helpers.selectedItem()
+          item.api.isChecked(false)
+        @helpers.selectedItem(null)
+
+
+
       items: ->
         @api.count() # Hook into reactive callback.
         @items
@@ -199,9 +220,12 @@ Ctrl.define
 
 
       updateState: ->
+        return if @__internal__.isUpdatingState
+        @__internal__.isUpdatingState = true
+
         isEnabled = @api.isEnabled()
         size = @api.size()
-        selectedItem = @helpers.selectedItem()
+        selectedItem = Deps.nonreactive => @helpers.selectedItem()
 
         isItemEnabled = (item) ->
             return false unless isEnabled
@@ -213,7 +237,7 @@ Ctrl.define
           radioCtrl.isChecked((item.id is selectedItem?.id) ? false)
           radioCtrl.isEnabled(isItemEnabled(item))
 
-
+        @__internal__.isUpdatingState = false
 
 
 
@@ -226,16 +250,20 @@ createItem = (instance, options) ->
   id = options.id ? _.uniqueId('rdo')
   ctrl = null
   defaultIsEnabled = options.isEnabled ? true
+  helpers = instance.helpers
 
   # Render the radio button.
   data =
     label:      options.label ? 'Unnamed'
     message:    options.message
     size:       instance.api.size()
-    isChecked:  options.isChecked
     isEnabled:  defaultIsEnabled
   ctrl = instance.appendCtrl 'c-radio', instance.el(), data:data
-  ctrl.onDestroyed -> handle?.stop()
+  ctrl.onDestroyed ->
+      # Dispose.
+      ctrl.off 'changed'
+      helpers.selectedItem(null) if helpers.selectedItem() is item
+
 
   item =
     id: id
@@ -251,9 +279,7 @@ createItem = (instance, options) ->
       isEnabled: (value) -> instance.prop "isEnabled:#{ id }", value, default:defaultIsEnabled
 
   # Monitor selection state.
-  handle = Deps.autorun ->
-      if ctrl.isChecked()
-        instance.helpers.selectedItem(item)
+  ctrl.on 'changed', (j, e) -> helpers.select(item) if e.isChecked
 
   # Finish up.
   item

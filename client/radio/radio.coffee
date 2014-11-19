@@ -82,6 +82,12 @@ Ctrl.define
       isLabelCtrl: -> @api.label()?.tmpl?
       isMessageCtrl: -> @api.label()?.tmpl?
 
+      tempId: ->
+        @uid
+
+
+
+
 
     events:
       'mousedown': (e) ->

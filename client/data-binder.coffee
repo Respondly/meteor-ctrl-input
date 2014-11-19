@@ -1,6 +1,3 @@
-
-console.log 'TODO - Fix data-binder to not ignore changes when Ctrl is focused.'
-
 ###
 Binds changes between a model and a UI control.
 ###
@@ -23,12 +20,13 @@ class Ctrls.DataBinder extends AutoRun
             from = Deps.nonreactive => @readCtrlProp()
 
             # Determine whether the UI control should be updated.
-            updateCtrl = (to isnt from) and not @ctrl.hasFocus()
+            updateCtrl = (to isnt from) # and not @ctrl.hasFocus()
             updateCtrl = true if not isInitialized
 
+            # Perform the update.
             if updateCtrl
               if (@readCtrlProp() isnt to) or not isInitialized
-                @writeCtrlProp(to) if updateCtrl
+                @writeCtrlProp(to)
 
 
     # SYNC: Update the UI control when the saved model property is updated.
