@@ -1,5 +1,5 @@
 <template name='c-button'>
-  <div class='c-button {{ cssClass }}'>
-    <code>{{ instance }}</code>
-  </div>
+  <button class='c-button btn {{ cssClass }}' {{ disabled }}>
+    {{ api.label }}
+  </button>
 </template>
