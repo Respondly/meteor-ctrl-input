@@ -2,7 +2,7 @@
 A set of radio buttons.
 
 Events:
-  changed
+  - changed
 
 ###
 Ctrl.define

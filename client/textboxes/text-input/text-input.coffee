@@ -20,6 +20,7 @@ Ctrl.define
       @data ?= {}
       @options ?= {}
 
+
     ready: ->
       # Setup initial conditions.
       @api.text(Util.asValue(@data.text))
@@ -38,12 +39,23 @@ Ctrl.define
           @trigger 'enter', e
           @trigger 'key:enter', e
 
+
+      # Provide a way for the text to be reset to [undefined]
+      # NB: This is used by the data-binder.
+      supressBinder = false
+      @ctrl.text.delete = =>
+          supressBinder = true
+          @api.clear()
+          supressBinder = false
+
+
       # Wire up events.
       editableCtrl.on 'changed', (j, e) =>
           @trigger('changed', e)
           @helpers.updateHoverEdit()
           @helpers.updateInputText()
-          @__internal__.binder?.onCtrlChanged(e.text)
+          if not supressBinder
+            @__internal__.binder?.onCtrlChanged(e.text)
 
       # Sync: Update input when related state changes.
       @autorun =>
@@ -95,15 +107,15 @@ Ctrl.define
 
 
     api:
-      label:          (value) -> @prop 'label',            value
-      required:       (value) -> @prop 'required',         value, default:false
+      label:          (value) -> @prop 'label',       value
+      required:       (value) -> @prop 'required',    value, default:false
 
-      placeholder:    (value) -> @prop 'placeholder',      value,
-      maxLength:      (value) -> @prop 'maxLength',       value, default: 500
-      canEdit:        (value) -> @prop 'canEdit',         value, default: true
-      isEnabled:      (value) -> @prop 'enabled',          value, default: true
-      multiLine:      (value) -> @prop 'multiLine',       value, default: false
-      prefix:         (value) -> @prop 'prefix',           value
+      placeholder:    (value) -> @prop 'placeholder', value,
+      maxLength:      (value) -> @prop 'maxLength',   value, default: 500
+      canEdit:        (value) -> @prop 'canEdit',     value, default: true
+      isEnabled:      (value) -> @prop 'enabled',     value, default: true
+      multiLine:      (value) -> @prop 'multiLine',   value, default: false
+      prefix:         (value) -> @prop 'prefix',      value
 
       focus: -> @editableCtrl?.focus()
       hasFocus: -> @editableCtrl?.hasFocus() ? false
