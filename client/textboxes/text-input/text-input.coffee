@@ -113,7 +113,7 @@ Ctrl.define
       hasValue: -> not @api.isEmpty()
 
       hoverEdit:      (value) -> @prop 'hoverEdit',      value, default: false
-      isValid:        (value) -> @prop 'isValid',        value,
+      isValid:        (value) -> @prop 'isValid',        value, default:null
       isSpinning:     (value) -> @prop 'isSpinning',     value, default: false
       isSearch:       (value) -> @prop 'isSearch',       value, default: false
       message:        (value) -> @prop 'message',        value, default: ''
