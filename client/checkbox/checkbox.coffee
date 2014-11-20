@@ -10,6 +10,13 @@ Ctrl.define
     ready: ->
       el = @find()
 
+      # Provide a way for the value to be reset to [undefined]
+      # NB: This is used by the data-binder.
+      @ctrl.isChecked.delete = =>
+          @__internal__.supressBinder = true
+          @api.isChecked(null)
+          @__internal__.supressBinder = false
+
       # Sync: CSS classes.
       @autorun =>
           # Setup initial conditions.
@@ -81,7 +88,8 @@ Ctrl.define
               isChecked: value
               wasClicked: options.wasClicked ? false
             @trigger('changed', args)
-            @__internal__.binder?.onCtrlChanged(value)
+            unless @__internal__.supressBinder
+              @__internal__.binder?.onCtrlChanged(value)
 
           @_lastIsChecked = value
         result
