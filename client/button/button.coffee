@@ -28,7 +28,7 @@ Ctrl.define
     api:
       isEnabled: (value) -> @prop 'isEnabled', value, default:true
       size:      (value) -> @prop 'size', value, default:32
-      label:     (value) -> @prop 'label', value, default:'Unnamed'
+      label:     (value) -> @prop 'label', value
       color:     (value) -> @prop 'color', value, default:'silver'
       isPressed: (value) -> @prop 'isPressed', value, default:false
 
@@ -56,6 +56,12 @@ Ctrl.define
         css
 
       disabled: -> 'disabled' unless @api.isEnabled()
+
+      label: ->
+        label = @api.label()
+        return if label is null
+        label = 'Unnamed' if Util.isBlank(label)
+        label
 
       fire: (event) -> @trigger(event, { label:@api.label() })
 
