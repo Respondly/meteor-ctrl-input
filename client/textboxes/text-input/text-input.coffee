@@ -39,23 +39,15 @@ Ctrl.define
           @trigger 'enter', e
           @trigger 'key:enter', e
 
-
       # Provide a way for the text to be reset to [undefined]
       # NB: This is used by the data-binder.
-      supressBinder = false
-      @ctrl.text.delete = =>
-          supressBinder = true
-          @api.clear()
-          supressBinder = false
-
+      @ctrl.text.delete = => @editableCtrl.text.delete()
 
       # Wire up events.
       editableCtrl.on 'changed', (j, e) =>
           @trigger('changed', e)
           @helpers.updateHoverEdit()
           @helpers.updateInputText()
-          if not supressBinder
-            @__internal__.binder?.onCtrlChanged(e.text)
 
       # Sync: Update input when related state changes.
       @autorun =>
@@ -68,8 +60,8 @@ Ctrl.define
             editableCtrl.canEdit(canEdit)
 
             Deps.afterFlush =>
-              @helpers.updateInputText()
-              @helpers.updateCss()
+                @helpers.updateInputText()
+                @helpers.updateCss()
 
       # Sync: Update [can-edit] when the [hover-edit] value changes.
       @autorun =>
@@ -102,8 +94,7 @@ Ctrl.define
       @helpers.updateHoverEdit()
 
 
-    destroyed: ->
-      @__internal__.binder?.dispose()
+    destroyed: -> @editableCtrl?.dispose()
 
 
     api:
@@ -151,8 +142,7 @@ Ctrl.define
       See [Ctrls.DataBinder].
       ###
       bind: (propertyName, modelFactory) ->
-        @__internal__.binder?.dispose()
-        @__internal__.binder = new Ctrls.DataBinder(@ctrl, 'text', propertyName, modelFactory)
+        @editableCtrl.bind(propertyName, modelFactory)
 
 
 

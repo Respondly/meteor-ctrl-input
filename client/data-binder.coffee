@@ -29,7 +29,9 @@ class Ctrls.DataBinder extends AutoRun
                 @writeCtrlProp(to)
 
     # SYNC: Update the UI control when the saved model property is updated.
-    @autorun => syncCtrlWithModel()
+    @autorun =>
+          if isInitialized
+            syncCtrlWithModel()
 
     # SYNC: Model reverts.
     @autorun =>

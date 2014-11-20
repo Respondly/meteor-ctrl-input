@@ -60,10 +60,23 @@ Ctrl.define
       bubble('key:esc')
 
       # Handle events.
-      @textbox.on 'changed', (j,e) => @__internal__.binder?.onCtrlChanged(e.text)
       @textbox.on 'focus', (j,e) => @find().addClass 'focused'
       @textbox.on 'blur', (j,e) => @find().removeClass 'focused'
       @textbox.el.on 'paste', (e) => setPlaceholder(false)
+
+      # Databinding.
+      supressBinder = false
+      @textbox.on 'changed', (j,e) =>
+          if not supressBinder
+            @__internal__.binder?.onCtrlChanged(e.text)
+
+      # Provide a way for the text to be reset to [undefined]
+      # NB: This is used by the data-binder.
+      @ctrl.text.delete = =>
+          supressBinder = true
+          @api.clear()
+          supressBinder = false
+
 
       # Keep CSS classes in sync.
       @autorun =>
@@ -161,7 +174,7 @@ Ctrl.define
       Sets up a Model data-binding for the textbox.
       See [Ctrls.DataBinder].
       ###
-      bind: (propertyName, modelFactory, options = {}) ->
+      bind: (propertyName, modelFactory) ->
         @__internal__.binder?.dispose()
         @__internal__.binder = new Ctrls.DataBinder(@ctrl, 'text', propertyName, modelFactory)
 
