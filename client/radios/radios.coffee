@@ -183,6 +183,7 @@ Ctrl.define
       selectedItem: (value) -> @prop 'selectedItem', value
 
       select: (item) ->
+        return if @helpers.selectedItem() is item
         @helpers.selectedItem(item)
         @helpers.updateState()
 
