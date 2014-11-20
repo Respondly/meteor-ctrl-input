@@ -5,7 +5,13 @@ sizeMap =
   'c-size-22': 'btn-mini'
 
 
+###
+A standard button.
 
+Events:
+  - clicked
+
+###
 Ctrl.define
   'c-button':
     init: ->
@@ -24,6 +30,14 @@ Ctrl.define
       size:      (value) -> @prop 'size', value, default:32
       label:     (value) -> @prop 'label', value, default:'Unnamed'
       color:     (value) -> @prop 'color', value, default:'silver'
+      isPressed: (value) -> @prop 'isPressed', value, default:false
+
+
+      ###
+      Invokes the click operation if enabled.
+      ###
+      click: -> @helpers.fire('clicked') if @api.isEnabled()
+
 
 
     helpers:
@@ -43,5 +57,15 @@ Ctrl.define
 
       disabled: -> 'disabled' unless @api.isEnabled()
 
+      fire: (event) -> @trigger(event, { label:@api.label() })
 
-    events: {}
+      onClick: (isPressed) ->
+        if @api.isEnabled()
+          @api.isPressed(isPressed)
+          @api.click() if isPressed is false
+
+
+
+    events:
+      'mousedown': (e) -> @helpers.onClick(true) if e.button is 0
+      'mouseup': (e) -> @helpers.onClick(false) if e.button is 0
