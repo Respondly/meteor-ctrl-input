@@ -1,14 +1,11 @@
 Ctrl.define
-  'c-button':
+  'c-select':
     init: ->
     ready: ->
     destroyed: ->
     model: ->
-    api:
-      ###
-      Gets or sets the enabled state of the control.
-      ###
+    api: 
       isEnabled: (value) -> @prop 'isEnabled', value, default:true
-
+      
     helpers: {}
     events: {}
