@@ -23,8 +23,12 @@ Ctrl.define
       @autorun => throwUnlessSupported('color', @api.color(), ['silver', 'blue', 'green', 'red', 'orange', 'black', null])
 
     ready: ->
-    destroyed: ->
-    model: ->
+
+      # Apply the "data-*" attributes.
+      console.log 'Apply the "data-*" attributes.'
+
+
+
     api:
       isEnabled: (value) -> @prop 'isEnabled', value, default:true
       size:      (value) -> @prop 'size', value, default:32
@@ -40,6 +44,8 @@ Ctrl.define
 
 
 
+
+
     helpers:
       cssClass: ->
         isEnabled = @api.isEnabled()
@@ -49,10 +55,12 @@ Ctrl.define
         color = @api.color()
         color = '' if color is 'silver'
         color = 'label-only' if color is null
+        color = "c-#{ color }" unless color is ''
 
         css = "#{ cssSize } #{ cssBtn } #{ color }"
         css += ' c-enabled' if isEnabled
         css += ' c-disabled' if not isEnabled
+
         css
 
       disabled: -> 'disabled' unless @api.isEnabled()
@@ -69,6 +77,7 @@ Ctrl.define
         if @api.isEnabled()
           @api.isPressed(isPressed)
           @api.click() if isPressed is false
+
 
 
 

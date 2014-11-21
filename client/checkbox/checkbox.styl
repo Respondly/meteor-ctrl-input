@@ -28,7 +28,7 @@
     .c-thumb
       abs-pos 0, 0, 0, 0
       transition opacity DURATION
-      .c-button
+      .c-visual
         abs-pos()
         border-radius 50%
         border solid 1px
@@ -163,7 +163,6 @@
 
   // ----------------------------------
 
-
   &.c-size-34
     line-height 30px
     groove-size(54px, 34px, 21px, 12px)
@@ -189,6 +188,8 @@
 
   // COLORS ------------------------------------------------------
 
+
+
   // Unchecked -------------------------
   &.c-not-checked
     .c-groove
@@ -196,7 +197,7 @@
         background rgba(black, 0.02)
         border-color rgba(black, 0.08)
       .c-thumb
-        .c-button
+        .c-visual
           border-color darken(white, 15%)
           box-shadow 1px 2px 6px 2px rgba(black, 0.1)
       .c-thumb-focus, .c-indeterminate-focus
@@ -210,7 +211,7 @@
         background GREEN
         border-color GREEN
       .c-thumb
-        .c-button
+        .c-visual
           border-color white
           box-shadow 1px 2px 6px 2px rgba(black, 0.2)
       .c-thumb-focus, .c-indeterminate-focus
