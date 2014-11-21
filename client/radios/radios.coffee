@@ -45,7 +45,7 @@ Ctrl.define
 
 
       ###
-      Gets or sets the currently selected value.
+      REACTIVE: Gets or sets the currently selected value.
       ###
       value: (value) ->
         # Write.
@@ -57,22 +57,13 @@ Ctrl.define
 
 
       ###
-      See [Ctrls.DataBinder].
-      ###
-      bind: (propertyName, modelFactory) ->
-        @__internal__.binder?.dispose()
-        @__internal__.binder = new Ctrls.DataBinder(@ctrl, 'value', propertyName, modelFactory)
-
-
-
-      ###
       Gets the selected item.
       ###
       selectedItem: -> @helpers.selectedItem()?.api
 
 
       ###
-      Gets the set of radio buttons.
+      REACTIVE: Gets the set of radio buttons.
       ###
       items: ->
         @api.count() # Hook into reactive callback.
@@ -136,6 +127,19 @@ Ctrl.define
       @param index: The index to select.
       ###
       select: (index) -> @api.items()[index]?.select()
+
+      # ----------------------------------------------------------------------
+
+
+      ###
+      See [Ctrls.DataBinder].
+      ###
+      bind: (propertyName, modelFactory) ->
+        @__internal__.binder?.dispose()
+        @__internal__.binder = new Ctrls.DataBinder(@ctrl, 'value', propertyName, modelFactory)
+
+
+      # ----------------------------------------------------------------------
 
 
       ###
