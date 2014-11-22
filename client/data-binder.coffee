@@ -14,6 +14,7 @@ class Ctrls.DataBinder extends AutoRun
     isInitialized = false
 
     syncCtrlWithModel = =>
+          return unless isInitialized
           if model = @model()
             # Calculate the to/from values.
             to = model.changes()?[@modelPropName]?.to ? @readModelProp()
@@ -30,12 +31,13 @@ class Ctrls.DataBinder extends AutoRun
 
     # SYNC: Update the UI control when the saved model property is updated.
     @autorun =>
-          if isInitialized
-            syncCtrlWithModel()
+          model = @model() # Hook into reactive callback.
+          syncCtrlWithModel()
 
     # SYNC: Model reverts.
     @autorun =>
-          if model = @model()
+          model = @model() # Hook into reactive callback.
+          if model
             if model.isSubModel() and model.parentModel?
               # NB: Hook into parent model if this is a sub-model.
               #     This ensures reactive changes invoke the callback.
@@ -47,6 +49,8 @@ class Ctrls.DataBinder extends AutoRun
 
     # Finish up.
     isInitialized = true
+    syncCtrlWithModel()
+
 
 
   ###
