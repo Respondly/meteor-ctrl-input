@@ -50,7 +50,7 @@ Ctrl.define
       value: (value) ->
         # Write.
         if value isnt undefined
-          @helpers.selectedItem(@helpers.itemFromValue(value))
+          @helpers.select(@helpers.itemFromValue(value))
 
         # Read.
         @api.selectedItem()?.value
@@ -262,6 +262,7 @@ createItem = (instance, options) ->
     message:    options.message
     size:       instance.api.size()
     isEnabled:  defaultIsEnabled
+    value:      options.value
   ctrl = instance.appendCtrl 'c-radio', instance.el(), data:data
   ctrl.onDestroyed ->
       # Dispose.
