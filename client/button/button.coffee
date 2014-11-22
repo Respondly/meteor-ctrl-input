@@ -34,13 +34,12 @@ Ctrl.define
       tabIndex: (value) -> @prop 'tabIndex', value
       isOver: (value) -> @prop 'isOver', value, default:false
 
-
       ###
-      Invokes the click operation if enabled.
+      Simulates a click action on the button.
       ###
-      click: -> @helpers.fire('clicked') if @api.isEnabled()
-
-
+      click: ->
+        @helpers.onClick(true)
+        Util.delay => @helpers.onClick(false)
 
 
 
@@ -81,9 +80,8 @@ Ctrl.define
       onClick: (isPressed) ->
         if @api.isEnabled()
           @api.isPressed(isPressed)
-          @api.click() if isPressed is false
-
-
+          if isPressed is false
+            @helpers.fire('clicked')
 
 
     events:
@@ -92,3 +90,8 @@ Ctrl.define
 
       'mouseenter': (e) -> @api.isOver(true)
       'mouseleave': (e) -> @api.isOver(false)
+
+      'keyup': (e) ->
+        if @ctrl.hasFocus()
+          @api.click() if e.which is Const.KEYS.ENTER
+
