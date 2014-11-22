@@ -63,11 +63,10 @@ Ctrl.define
         css = "#{ cssSize } #{ cssBtn } #{ color }"
         css += ' c-enabled' if isEnabled
         css += ' c-disabled' if not isEnabled
-
+        css += " #{ @defaultValue('cssClass') }"
         css
 
       disabled: -> 'disabled' unless @api.isEnabled()
-
       tabIndex: -> @api.tabIndex() ? ''
 
       label: ->
