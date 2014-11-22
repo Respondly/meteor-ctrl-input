@@ -30,6 +30,8 @@ Ctrl.define
       label:     (value) -> @prop 'label', value
       color:     (value) -> @prop 'color', value, default:'silver'
       isPressed: (value) -> @prop 'isPressed', value, default:false
+      tabIndex: (value) -> @prop 'tabIndex', value
+
 
 
       ###
@@ -59,6 +61,8 @@ Ctrl.define
         css
 
       disabled: -> 'disabled' unless @api.isEnabled()
+
+      tabIndex: -> @api.tabIndex() ? ''
 
       label: ->
         label = @api.label()

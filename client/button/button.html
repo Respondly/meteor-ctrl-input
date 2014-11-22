@@ -1,5 +1,8 @@
 <template name='c-button'>
-  <button class='c-button {{ cssClass }}' {{ disabled }}>
+  <button
+    class='c-button {{ cssClass }}'
+    tabindex={{ tabIndex }}
+    {{ disabled }}>
     <span>{{{ label }}}</span>
   </button>
 </template>
