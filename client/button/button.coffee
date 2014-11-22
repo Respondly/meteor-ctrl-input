@@ -22,19 +22,6 @@ Ctrl.define
       @autorun => throwUnlessSupported('size', @api.size(), [50, 32, 28, 22])
       @autorun => throwUnlessSupported('color', @api.color(), ['silver', 'blue', 'green', 'red', 'orange', 'black', null])
 
-    ready: ->
-
-      # Apply the "data-*" attributes.
-      applyAttributes = (obj) =>
-          el = @el()
-          for key, value of obj
-            if key.startsWith('data-')
-              el.attr(key, value)
-
-      applyAttributes(@data)
-      applyAttributes(@options)
-
-
 
 
     api:
