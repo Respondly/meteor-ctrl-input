@@ -23,6 +23,7 @@ Ctrl.define
 
       label: (value) -> @prop 'label', value, default:null
       message: (value) -> @prop 'message', value, default:null
+      value: -> @data.value
 
 
       ###
@@ -81,10 +82,6 @@ Ctrl.define
 
       isLabelCtrl: -> @api.label()?.tmpl?
       isMessageCtrl: -> @api.label()?.tmpl?
-
-      tempId: ->
-        @uid
-
 
 
 
