@@ -25,7 +25,15 @@ Ctrl.define
     ready: ->
 
       # Apply the "data-*" attributes.
-      console.log 'Apply the "data-*" attributes.'
+      applyAttributes = (obj) =>
+          el = @el()
+          for key, value of obj
+            if key.startsWith('data-')
+              el.attr(key, value)
+
+      applyAttributes(@data)
+      applyAttributes(@options)
+
 
 
 
