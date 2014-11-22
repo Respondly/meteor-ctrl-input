@@ -26,12 +26,13 @@ Ctrl.define
 
     api:
       isEnabled: (value) -> @prop 'isEnabled', value, default:true
+      labelOnly: (value) -> @prop 'labelOnly', value, default:false
       size:      (value) -> @prop 'size', value, default:32
       label:     (value) -> @prop 'label', value
       color:     (value) -> @prop 'color', value, default:'silver'
       isPressed: (value) -> @prop 'isPressed', value, default:false
       tabIndex: (value) -> @prop 'tabIndex', value
-
+      isOver: (value) -> @prop 'isOver', value, default:false
 
 
       ###
@@ -46,13 +47,18 @@ Ctrl.define
     helpers:
       cssClass: ->
         isEnabled = @api.isEnabled()
+        labelOnly = @api.labelOnly()
+
         cssSize = "c-size-#{ @api.size() }"
         cssBtn = sizeMap[cssSize]
 
-        color = @api.color()
-        color = '' if color is 'silver'
-        color = 'label-only' if color is null
-        color = "c-#{ color }" unless color is ''
+        if labelOnly and not @api.isOver()
+          color = 'c-label-only'
+        else
+          color = @api.color()
+          color = '' if color is 'silver'
+          color = '' if color is null
+          color = "c-#{ color }" unless color is ''
 
         css = "#{ cssSize } #{ cssBtn } #{ color }"
         css += ' c-enabled' if isEnabled
@@ -83,3 +89,6 @@ Ctrl.define
     events:
       'mousedown': (e) -> @helpers.onClick(true) if e.button is 0
       'mouseup': (e) -> @helpers.onClick(false) if e.button is 0
+
+      'mouseenter': (e) -> @api.isOver(true)
+      'mouseleave': (e) -> @api.isOver(false)
