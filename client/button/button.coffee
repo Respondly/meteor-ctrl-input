@@ -58,6 +58,7 @@ Ctrl.define
           color = @api.color()
           color = '' if color is 'silver'
           color = '' if color is null
+          color = '' if not isEnabled
           color = "c-#{ color }" unless color is ''
 
         css = "#{ cssSize } #{ cssBtn } #{ color }"
