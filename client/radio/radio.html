@@ -22,7 +22,7 @@
       {{#if isMessageCtrl}}
         {{> ctrl type=api.message.tmpl data=api.message.data }}
       {{else}}
-        <div class='c-message'>{{ api.message }}</div>
+        <div class='c-message'>{{{ api.message }}}</div>
       {{/if}}
     {{/if}}
   </div>
