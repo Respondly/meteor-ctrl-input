@@ -1,5 +1,8 @@
 Package.describe({
-  summary: ''
+  name: 'respondly:ctrls-input'
+  summary: 'UI controls that take input from the user',
+  version: '0.0.1',
+  git: 'https://github.com/Respondly/meteor-ctrls-input.git'
 });
 
 
@@ -7,7 +10,7 @@ Package.describe({
 Package.on_use(function (api) {
   api.use(['coffeescript', 'http']);
   api.use(['templating'], 'client');
-  api.use(['ctrl', 'util', 'css-stylus']);
+  api.use(['respondly:ctrl', 'respondly:util', 'respondly:css-stylus']);
   api.export('Ctrls');
 
   // Generated with: github.com/philcockfield/meteor-package-paths
