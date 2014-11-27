@@ -165,7 +165,8 @@ Ctrl.define
     events:
       'mousedown': (e) ->
         if @api.isClickable()
-          @api.click() if e.button is 0
+          if e.button is 0 and e.target.nodeName isnt 'A'
+            @api.click()
 
       'keydown': (e) ->
         @api.click() if e.which is Const.KEYS.SPACE
