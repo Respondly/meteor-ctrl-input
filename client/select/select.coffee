@@ -33,6 +33,11 @@ Ctrl.define
       @autorun => @helpers.updateState()
 
 
+    destroyed: ->
+      @__internal__.binder?.dispose()
+
+
+
     api:
       isEnabled: (value) -> @prop 'isEnabled', value, default:true
       size:      (value) -> @prop 'size', value, default:32
@@ -62,6 +67,9 @@ Ctrl.define
       items: ->
         @api.count() # Hook into reactive callback.
         @items.map (item) -> item.api
+
+
+      # ----------------------------------------------------------------------
 
 
       ###
@@ -99,6 +107,9 @@ Ctrl.define
       Clears all <option>'s.
       ###
       clear: -> item.remove() for item in @api.items()
+
+
+      # ----------------------------------------------------------------------
 
 
       ###
@@ -145,6 +156,16 @@ Ctrl.define
       ###
       select: (index) -> @helpers.select(@items[index])
 
+      # ----------------------------------------------------------------------
+
+      ###
+      See [Ctrls.DataBinder].
+      ###
+      bind: (propertyName, modelFactory) ->
+        @__internal__.binder?.dispose()
+        @__internal__.binder = new Ctrls.DataBinder(@ctrl, 'value', propertyName, modelFactory)
+
+
 
 
 
@@ -169,12 +190,12 @@ Ctrl.define
         # Alert listeners of changes.
         value = @api.value()
         @trigger('changed', { value:value, item:item?.api })
-        # @__internal__.binder?.onCtrlChanged(value)
+        @__internal__.binder?.onCtrlChanged(value)
 
 
       unselect: ->
         if item = @helpers.selectedItem()
-          item.api.isChecked(false)
+          item.api.isSelected(false)
         @helpers.selectedItem(null)
 
 
@@ -213,7 +234,6 @@ Ctrl.define
         value = @el().val()
         value = null if value is '<null>'
         value = undefined if value is '<undefined>'
-
         if value is undefined
           @ctrl.value.delete()
         else
@@ -233,7 +253,6 @@ createItem = (instance, options) ->
   data =
     id:         id
     label:      options.label
-    message:    options.message
     value:      options.value
   ctrl = instance.appendCtrl 'c-select-option', instance.el(), data:data
   ctrl.onDestroyed ->

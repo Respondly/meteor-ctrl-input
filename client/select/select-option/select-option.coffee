@@ -19,6 +19,8 @@ Ctrl.define
 
       value: ->
         value = @data.value
+        value = '<undefined>' if value is undefined
+        value = '<null>' if value is null
         value = @helpers.label() unless value?
         value
 
