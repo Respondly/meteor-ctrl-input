@@ -19,6 +19,7 @@ Package.onUse(function (api) {
   api.addFiles('shared/css-mixins/textbox.import.styl', 'server', { isAsset:true });
   api.addFiles('shared/util.coffee', ['client', 'server']);
   api.addFiles('client/textboxes/content-editable/ctrl/content-editable.html', 'client');
+  api.addFiles('client/select/select-option/select-option.html', 'client');
   api.addFiles('client/textboxes/raw-textbox/raw-textbox.html', 'client');
   api.addFiles('client/textboxes/text-input/text-input.html', 'client');
   api.addFiles('client/button/button.html', 'client');
@@ -34,6 +35,8 @@ Package.onUse(function (api) {
   api.addFiles('client/textboxes/content-editable/ctrl/content-editable.styl', 'client');
   api.addFiles('client/textboxes/validation/email_validator.coffee', 'client');
   api.addFiles('client/textboxes/validation/screen_name_validator.coffee', 'client');
+  api.addFiles('client/select/select-option/select-option.coffee', 'client');
+  api.addFiles('client/select/select-option/select-option.styl', 'client');
   api.addFiles('client/textboxes/content-editable/content-editable-controller.coffee', 'client');
   api.addFiles('client/textboxes/content-editable/css.styl', 'client');
   api.addFiles('client/textboxes/raw-textbox/raw-textbox.coffee', 'client');
@@ -42,7 +45,6 @@ Package.onUse(function (api) {
   api.addFiles('client/textboxes/text-input/text-input.styl', 'client');
   api.addFiles('client/button/button.coffee', 'client');
   api.addFiles('client/button/button.styl', 'client');
-  api.addFiles('client/textboxes/textbox-date.coffee', 'client');
   api.addFiles('client/checkbox/checkbox.coffee', 'client');
   api.addFiles('client/checkbox/checkbox.styl', 'client');
   api.addFiles('client/checkbox-tree/checkbox-tree.coffee', 'client');
@@ -53,6 +55,7 @@ Package.onUse(function (api) {
   api.addFiles('client/radios/radios.styl', 'client');
   api.addFiles('client/select/select.coffee', 'client');
   api.addFiles('client/select/select.styl', 'client');
+  api.addFiles('client/textboxes/textbox-date.coffee', 'client');
   api.addFiles('client/common.styl', 'client');
   api.addFiles('client/data-binder.coffee', 'client');
   api.addFiles('images/text_input_error.svg', ['client', 'server']);

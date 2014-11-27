@@ -89,7 +89,7 @@ Ctrl.define
         index = selectedItem?.api.index() ? -1
         index += 1
         index = items.length - 1 if index >= items.length
-        items[index]?.select()
+        @api.select(index)
         if selectedItem?.ctrl.hasFocus()
           items[index].focus()
 
@@ -104,7 +104,7 @@ Ctrl.define
         index = selectedItem?.api.index() ? items.length
         index -= 1
         index = 0 if index < 0
-        items[index]?.select()
+        @api.select(index)
         if selectedItem?.ctrl.hasFocus()
           items[index].focus()
 
@@ -126,7 +126,8 @@ Ctrl.define
       Selects the given index.
       @param index: The index to select.
       ###
-      select: (index) -> @api.items()[index]?.select()
+      select: (index) -> @helpers.select(@items[index])
+
 
       # ----------------------------------------------------------------------
 
