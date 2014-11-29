@@ -13,7 +13,7 @@ Package.onUse(function (api) {
   api.use(['templating', 'ui', 'spacebars'], 'client');
   api.use('respondly:ctrl@1.0.0');
   api.use('respondly:util@1.0.0');
-  api.use('respondly:css-stylus@1.0.0');
+  api.use('respondly:css-stylus@1.0.3');
   api.export('Ctrls');
 
   // Generated with: github.com/philcockfield/meteor-package-paths
