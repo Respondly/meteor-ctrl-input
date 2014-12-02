@@ -46,20 +46,21 @@ class Ctrls.DataBinder extends AutoRun
   Sync the model and the ctrl
   ###
   syncCtrlWithModel: ->
-    return unless @isInitialized
-    if model = @model()
-      # Calculate the to/from values.
-      to = model.changes()?[@modelPropName]?.to ? @readModelProp()
-      from = Tracker.nonreactive => @readCtrlProp()
+    Tracker.nonreactive =>
+        return unless @isInitialized
+        if model = @model()
+          # Calculate the to/from values.
+          to = model.changes()?[@modelPropName]?.to ? @readModelProp()
+          from = Tracker.nonreactive => @readCtrlProp()
 
-      # Determine whether the UI control should be updated.
-      updateCtrl = (to isnt from) # and not @ctrl.hasFocus()
-      updateCtrl = true if not @isInitialized
+          # Determine whether the UI control should be updated.
+          updateCtrl = (to isnt from) # and not @ctrl.hasFocus()
+          updateCtrl = true if not @isInitialized
 
-      # Perform the update.
-      if updateCtrl
-        if (@readCtrlProp() isnt to) or not @isInitialized
-          @writeCtrlProp(to)
+          # Perform the update.
+          if updateCtrl
+            if (@readCtrlProp() isnt to) or not @isInitialized
+              @writeCtrlProp(to)
 
 
 
@@ -70,22 +71,20 @@ class Ctrls.DataBinder extends AutoRun
   connectAutoRuns: ->
     # SYNC: Update the UI control when the saved model property is updated.
     @modelUIHandle = @autorun =>
-      model = @model() # Hook into reactive callback.
-      Tracker.nonreactive =>
+        model = @model() # Hook into reactive callback.
         @syncCtrlWithModel()
 
     # SYNC: Model reverts.
     @modelRevertHandle = @autorun =>
-      model = @model() # Hook into reactive callback.
-      if model
-        if model.isSubModel() and model.parentModel?
-          # NB: Hook into parent model if this is a sub-model.
-          #     This ensures reactive changes invoke the callback.
-          model = model.parentModel
+        model = @model() # Hook into reactive callback.
+        if model
+          if model.isSubModel() and model.parentModel?
+            # NB: Hook into parent model if this is a sub-model.
+            #     This ensures reactive changes invoke the callback.
+            model = model.parentModel
 
-        if model.changes() is null
-          # The changes have been reset, sync the control.
-          Tracker.nonreactive =>
+          if model.changes() is null
+            # The changes have been reset, sync the control.
             @syncCtrlWithModel()
 
 
