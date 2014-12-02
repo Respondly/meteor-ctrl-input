@@ -21,7 +21,7 @@ class Ctrls.DataBinder extends AutoRun
     currentId = undefined
     @autorun =>
       @modelFactory() # react to model factory changes
-      Deps.nonreactive =>
+      Tracker.nonreactive =>
         # initialize - mark the current model id
         # as the currently bound id
         modelId = @modelId(@model())
@@ -50,7 +50,7 @@ class Ctrls.DataBinder extends AutoRun
     if model = @model()
       # Calculate the to/from values.
       to = model.changes()?[@modelPropName]?.to ? @readModelProp()
-      from = Deps.nonreactive => @readCtrlProp()
+      from = Tracker.nonreactive => @readCtrlProp()
 
       # Determine whether the UI control should be updated.
       updateCtrl = (to isnt from) # and not @ctrl.hasFocus()
@@ -71,7 +71,8 @@ class Ctrls.DataBinder extends AutoRun
     # SYNC: Update the UI control when the saved model property is updated.
     @modelUIHandle = @autorun =>
       model = @model() # Hook into reactive callback.
-      @syncCtrlWithModel()
+      Tracker.nonreactive =>
+        @syncCtrlWithModel()
 
     # SYNC: Model reverts.
     @modelRevertHandle = @autorun =>
@@ -84,7 +85,8 @@ class Ctrls.DataBinder extends AutoRun
 
         if model.changes() is null
           # The changes have been reset, sync the control.
-          @syncCtrlWithModel()
+          Tracker.nonreactive =>
+            @syncCtrlWithModel()
 
 
 
