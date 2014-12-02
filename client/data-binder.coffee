@@ -11,45 +11,80 @@ class Ctrls.DataBinder extends AutoRun
   ###
   constructor: (@ctrl, @ctrlPropName, @modelPropName, @modelFactory) ->
     super
-    isInitialized = false
+    @isInitialized = false
 
-    syncCtrlWithModel = =>
-          return unless isInitialized
-          if model = @model()
-            # Calculate the to/from values.
-            to = model.changes()?[@modelPropName]?.to ? @readModelProp()
-            from = Deps.nonreactive => @readCtrlProp()
+    # setup model change autoruns for the databinder
+    @connectAutoRuns()
 
-            # Determine whether the UI control should be updated.
-            updateCtrl = (to isnt from) # and not @ctrl.hasFocus()
-            updateCtrl = true if not isInitialized
-
-            # Perform the update.
-            if updateCtrl
-              if (@readCtrlProp() isnt to) or not isInitialized
-                @writeCtrlProp(to)
-
-    # SYNC: Update the UI control when the saved model property is updated.
+    # If the model.id changes stop the current set
+    # of autoruns and start a new set
+    currentId = undefined
     @autorun =>
-          model = @model() # Hook into reactive callback.
-          syncCtrlWithModel()
+      @modelFactory() # react to model factory changes
+      Deps.nonreactive =>
+        # initialize - mark the current model id
+        # as the currently bound id
+        modelId = @modelId(@model())
+        if not currentId and modelId
+          currentId = modelId
 
-    # SYNC: Model reverts.
-    @autorun =>
-          model = @model() # Hook into reactive callback.
-          if model
-            if model.isSubModel() and model.parentModel?
-              # NB: Hook into parent model if this is a sub-model.
-              #     This ensures reactive changes invoke the callback.
-              model = model.parentModel
-
-            if model.changes() is null
-              # The changes have been reset, sync the control.
-              syncCtrlWithModel()
+        # if the current model has changed
+        # stop and restart the autoruns
+        else if modelId and currentId isnt modelId
+          @modelRevertHandle?.stop()
+          @modelUIHandle?.stop()
+          @connectAutoRuns()
+          currentId = modelId
 
     # Finish up.
-    isInitialized = true
-    syncCtrlWithModel()
+    @isInitialized = true
+    @syncCtrlWithModel()
+
+
+
+  ###
+  Sync the model and the ctrl
+  ###
+  syncCtrlWithModel: ->
+    return unless @isInitialized
+    if model = @model()
+      # Calculate the to/from values.
+      to = model.changes()?[@modelPropName]?.to ? @readModelProp()
+      from = Deps.nonreactive => @readCtrlProp()
+
+      # Determine whether the UI control should be updated.
+      updateCtrl = (to isnt from) # and not @ctrl.hasFocus()
+      updateCtrl = true if not @isInitialized
+
+      # Perform the update.
+      if updateCtrl
+        if (@readCtrlProp() isnt to) or not @isInitialized
+          @writeCtrlProp(to)
+
+
+
+  ###
+  Connect autoruns that are responsible for keeping the model in sync
+  with the control
+  ###
+  connectAutoRuns: ->
+    # SYNC: Update the UI control when the saved model property is updated.
+    @modelUIHandle = @autorun =>
+      model = @model() # Hook into reactive callback.
+      @syncCtrlWithModel()
+
+    # SYNC: Model reverts.
+    @modelRevertHandle = @autorun =>
+      model = @model() # Hook into reactive callback.
+      if model
+        if model.isSubModel() and model.parentModel?
+          # NB: Hook into parent model if this is a sub-model.
+          #     This ensures reactive changes invoke the callback.
+          model = model.parentModel
+
+        if model.changes() is null
+          # The changes have been reset, sync the control.
+          @syncCtrlWithModel()
 
 
 
@@ -59,10 +94,25 @@ class Ctrls.DataBinder extends AutoRun
   model: -> @modelFactory()
 
 
+
+  ###
+  Return the model id
+  Or if the model is a subModel, the parent model
+  ###
+  modelId: (model) ->
+    if model?.id?
+      model.id
+    else if model?.parentModel?.id
+      @modelId(model.parentModel)
+    else
+      null
+
+
   ###
   Gets the property on model.
   ###
   readModelProp: -> @model()[@modelPropName]()
+
 
 
   ###
@@ -75,10 +125,12 @@ class Ctrls.DataBinder extends AutoRun
       @model()[@modelPropName](value)
 
 
+
   ###
   Gets the property on UI control.
   ###
   readCtrlProp: -> @ctrl[@ctrlPropName]()
+
 
 
   ###
