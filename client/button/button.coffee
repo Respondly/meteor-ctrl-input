@@ -25,14 +25,17 @@ Ctrl.define
 
 
     api:
+      ###
+      REACTIVE Properties.
+      ###
       isEnabled: (value) -> @prop 'isEnabled', value, default:true
       labelOnly: (value) -> @prop 'labelOnly', value, default:false
       size:      (value) -> @prop 'size', value, default:32
       label:     (value) -> @prop 'label', value
       color:     (value) -> @prop 'color', value, default:'silver'
       isPressed: (value) -> @prop 'isPressed', value, default:false
-      tabIndex: (value) -> @prop 'tabIndex', value
-      isOver: (value) -> @prop 'isOver', value, default:false
+      tabIndex:  (value) -> @prop 'tabIndex', value
+      isOver:    (value) -> @prop 'isOver', value, default:false
 
       ###
       Simulates a click action on the button.
