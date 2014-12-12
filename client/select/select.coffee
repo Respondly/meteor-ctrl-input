@@ -52,7 +52,10 @@ Ctrl.define
           @helpers.select(@helpers.itemFromValue(value))
 
         # Read.
-        @api.selectedItem()?.value
+        result = @api.selectedItem()?.value
+        result = true if result is 'true' # Make sure boolean strings are converted.
+        result = false if result is 'false'
+        result
 
 
       ###
