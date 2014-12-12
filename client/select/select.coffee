@@ -232,8 +232,12 @@ Ctrl.define
     events:
       'change': (e) ->
         value = @el().val()
+        console.log 'value', value
         value = null if value is '<null>'
         value = undefined if value is '<undefined>'
+        value = true if value is '<true>'
+        value = false if value is '<false>'
+
         if value is undefined
           @ctrl.value.delete()
         else
@@ -244,6 +248,7 @@ Ctrl.define
 # ----------------------------------------------------------------------
 
 
+
 createItem = (instance, options) ->
   id = options.id ? _.uniqueId('option')
   ctrl = null
@@ -251,15 +256,14 @@ createItem = (instance, options) ->
 
   # Render the <option>.
   data =
-    id:         id
-    label:      options.label
-    value:      options.value
+    id:    id
+    label: options.label
+    value: options.value
   ctrl = instance.appendCtrl 'c-select-option', instance.el(), data:data
   ctrl.onDestroyed ->
       # Dispose.
       ctrl.off 'changed'
       helpers.selectedItem(null) if helpers.selectedItem() is item
-
 
   item =
     id: id
