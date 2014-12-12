@@ -232,7 +232,6 @@ Ctrl.define
     events:
       'change': (e) ->
         value = @el().val()
-        console.log 'value', value
         value = null if value is '<null>'
         value = undefined if value is '<undefined>'
         value = true if value is '<true>'
