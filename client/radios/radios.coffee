@@ -256,14 +256,20 @@ createItem = (instance, options) ->
   ctrl = null
   defaultIsEnabled = options.isEnabled ? true
   helpers = instance.helpers
+  value = options.value
+
+  # Format label.
+  label = options.label
+  if not label?
+    label = if Object.isBoolean(value) then value.toString().capitalize() else 'Unnamed'
 
   # Render the radio button.
   data =
-    label:      options.label ? 'Unnamed'
+    label:      label
     message:    options.message
     size:       instance.api.size()
     isEnabled:  defaultIsEnabled
-    value:      options.value
+    value:      value
   ctrl = instance.appendCtrl 'c-radio', instance.el(), data:data
   ctrl.onDestroyed ->
       # Dispose.
@@ -276,7 +282,7 @@ createItem = (instance, options) ->
     ctrl: ctrl
     api:
       id:id
-      value: options.value
+      value: value
       index: -> instance.items.indexOf(item)
       focus: -> ctrl.focus()
       remove: -> instance.api.removeAt(@index())
