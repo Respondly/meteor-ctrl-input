@@ -33,16 +33,13 @@ Ctrl.define
       size:      (value) -> @prop 'size', value, default:32
       label:     (value) -> @prop 'label', value
       color:     (value) -> @prop 'color', value, default:'silver'
-      isPressed: (value) -> @prop 'isPressed', value, default:false
       tabIndex:  (value) -> @prop 'tabIndex', value
       isOver:    (value) -> @prop 'isOver', value, default:false
 
       ###
-      Simulates a click action on the button.
+      Invokes the click action on the button, alerting listeners if required.
       ###
-      click: ->
-        @helpers.onClick(true)
-        Util.delay => @helpers.onClick(false)
+      click: -> @helpers.fire('clicked') if @api.isEnabled()
 
 
 
@@ -88,9 +85,7 @@ Ctrl.define
 
 
     events:
-      'mousedown': (e) -> @helpers.onClick(true) if e.button is 0
-      'mouseup': (e) -> @helpers.onClick(false) if e.button is 0
-
+      'click': (e) -> @api.click()
       'mouseenter': (e) -> @api.isOver(true)
       'mouseleave': (e) -> @api.isOver(false)
 
