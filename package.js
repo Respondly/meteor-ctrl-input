@@ -61,8 +61,8 @@ Package.onUse(function (api) {
   api.addFiles('client/textboxes/textbox-date.coffee', 'client');
   api.addFiles('client/common.styl', 'client');
   api.addFiles('client/data-binder.coffee', 'client');
-  api.addFiles('images/text_input_error.svg', ['client', 'server']);
-  api.addFiles('images/text_input_tick.svg', ['client', 'server']);
+  api.addFiles('images/text-input-error.svg', ['client', 'server']);
+  api.addFiles('images/text-input-tick.svg', ['client', 'server']);
 
 });
 
