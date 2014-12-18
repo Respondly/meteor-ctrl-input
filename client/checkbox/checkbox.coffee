@@ -1,3 +1,6 @@
+SUPPORTED_SIZES = [22, 34]
+SUPPORTED_MODES = ['switch', 'tick']
+
 ###
 A rounded checkbox (like iOS / Google Material).
 
@@ -7,6 +10,19 @@ Events:
 ###
 Ctrl.define
   'c-checkbox':
+    init: ->
+      # Ensure 'size' is supported.
+      @autorun =>
+          size = @api.size()
+          unless (SUPPORTED_SIZES.any (item) -> item is size)
+            throw new Error("Size '#{ size }' not supported. Use one of: #{ SUPPORTED_SIZES }")
+
+      # Ensure 'mode' is supported.
+      @autorun =>
+          mode = @api.mode()
+          unless (SUPPORTED_MODES.any (item) -> item is mode)
+            throw new Error("Mode '#{ mode }' not supported. Use one of: #{ SUPPORTED_MODES }")
+
     ready: ->
       el = @find()
 
@@ -19,49 +35,78 @@ Ctrl.define
 
       # Sync: CSS classes.
       @autorun =>
-          # Setup initial conditions.
-          isChecked = @api.isChecked()
-          isEnabled = @api.isEnabled()
-          hasLeftLabel = not Util.isBlank(@helpers.labelLeft())
-          hasRightLabel = not Util.isBlank(@helpers.labelRight())
-          hasLabel = hasLeftLabel or hasRightLabel
+            # Setup initial conditions.
+            isChecked = @api.isChecked()
+            isEnabled = @api.isEnabled()
+            hasLeftLabel = not Util.isBlank(@helpers.labelLeft())
+            hasRightLabel = not Util.isBlank(@helpers.labelRight())
+            hasLabel = hasLeftLabel or hasRightLabel
 
-          # Update CSS classes.
-          el.toggleClass 'c-indeterminate', (isChecked is null)
-          el.toggleClass 'c-checked', (isChecked is true or isChecked is null)
-          el.toggleClass 'c-not-checked', (isChecked is false)
-          el.toggleClass 'c-enabled', isEnabled
-          el.toggleClass 'c-disabled', not isEnabled
-          el.toggleClass 'c-straddle', @api.straddle()
-          el.toggleClass 'c-has-label', hasLabel
-          el.toggleClass 'c-has-left-label', hasLeftLabel
-          el.toggleClass 'c-has-right-label', hasRightLabel
-          el.toggleClass 'c-has-message', not Util.isBlank(@helpers.message())
+            # Update CSS classes.
+            el.toggleClass 'c-indeterminate', (isChecked is null)
+            el.toggleClass 'c-checked', (isChecked is true or isChecked is null)
+            el.toggleClass 'c-not-checked', (isChecked is false)
+            el.toggleClass 'c-enabled', isEnabled
+            el.toggleClass 'c-disabled', not isEnabled
+            el.toggleClass 'c-straddle', @api.straddle()
+            el.toggleClass 'c-has-label', hasLabel
+            el.toggleClass 'c-has-left-label', hasLeftLabel
+            el.toggleClass 'c-has-right-label', hasRightLabel
+            el.toggleClass 'c-has-message', not Util.isBlank(@helpers.message())
 
-          # Size.
-          supportedSizes = [22, 34]
-          size = @api.size()
-          unless (supportedSizes.any (item) -> item is size)
-            throw new Error("Size '#{ size }' not supported. Use one of: #{ supportedSizes }")
+            # Size.
+            size = @api.size()
+            for item in SUPPORTED_SIZES
+              el.removeClass "c-size-#{ item }"
+              if item is size
+                el.addClass "c-size-#{ item }"
 
-          for item in supportedSizes
-            el.removeClass "c-size-#{ item }"
-            if item is size
-              el.addClass "c-size-#{ item }"
+      # Load the appropriate affordance Ctrl.
+      affordanceHandle = null
+      @affordanceCtrl = null
+      @autorun =>
+          mode = @api.mode()
+          type = switch mode
+                   when 'switch' then 'c-checkbox-switch'
+                   when 'tick' then 'c-checkbox-tick'
+                   else throw new Error("Mode not supported: #{ mode }")
+
+          # Destroy existing affordance control if it exists.
+          @affordanceCtrl?.dispose()
+          affordanceHandle?.stop()
+
+          # Insert the new affordance control.
+          data = Tracker.nonreactive =>
+                {
+                  size: @api.size()
+                  isEnabled: @api.isEnabled()
+                  isChecked: @api.isChecked()
+                }
+          ctrl = @affordanceCtrl = @appendCtrl(type, '> .c-affordance', data:data)
+          ctrl.onReady =>
+              affordanceHandle = @autorun =>
+                  # Keep the affordance in sync with the root Checkbox.
+                  ctrl.isEnabled(@api.isEnabled())
+                  ctrl.isChecked(@api.isChecked())
+                  ctrl.size(@api.size())
 
       # Finish up.
       isCreated = true
       Util.delay => el.addClass('c-animated')
 
 
-    destroyed: ->
-      @__internal__.binder?.dispose()
+
+    destroyed: -> @__internal__.binder?.dispose()
+
 
 
     api:
       isEnabled:    (value) -> @prop 'enabled', value, default:true
       isClickable:  (value) -> @prop 'isClickable', value, default:true
+
       size:         (value) -> @prop 'size', value, default:22
+      mode:         (value) -> @prop 'mode', value, default:'switch'
+
 
       label:        (value) -> @prop 'label', value, default:null
       onLabel:      (value) -> @prop 'onLabel', value, default:null
@@ -120,11 +165,20 @@ Ctrl.define
 
 
       ###
+      Handled assigning focus to the control.
+      ###
+      focus: ->
+        # Pass focus down to the embedded affordance.
+        @affordanceCtrl?.focus()
+
+
+      ###
       See [Ctrls.DataBinder].
       ###
       bind: (propertyName, modelFactory) ->
         @__internal__.binder?.dispose()
         @__internal__.binder = new Ctrls.DataBinder(@ctrl, 'isChecked', propertyName, modelFactory)
+
 
 
     helpers:
@@ -162,11 +216,13 @@ Ctrl.define
 
 
 
+
     events:
       'mousedown': (e) ->
         if @api.isClickable()
-          @api.click() if e.button is 0
+          if e.button is 0 and e.target.nodeName isnt 'A'
+            @api.click()
+
 
       'keydown': (e) ->
         @api.click() if e.which is Const.KEYS.SPACE
-

@@ -1,0 +1,161 @@
+@import 'core.import'
+
+
+.c-checkbox-switch
+  GREEN = #4cd864
+  DURATION = 0.2s
+  position relative
+  display inline-block
+  cursor pointer
+  outline none
+
+  box-sizing border-box
+  *
+    box-sizing border-box
+
+
+  &.c-disabled
+    opacity 0.4
+    cursor default
+
+  // -------------------------------
+
+  .c-groove-outer
+    position relative
+    display inline-block
+
+  .c-groove
+    abs-pos 0, 0, null, null
+    .c-groove-bg
+      border solid 1px
+    .c-thumb
+      abs-pos 0, 0, 0, 0
+      transition opacity DURATION
+      .c-visual
+        abs-pos()
+        border-radius 50%
+        border solid 1px
+        background white
+
+
+  // FOCUS ----------------------------------
+
+
+  .c-thumb-focus, .c-indeterminate-focus
+    opacity 0
+    transition opacity 0.4s, background-color DURATION
+
+  &:focus
+    .c-thumb-focus
+      opacity 1
+
+  &:focus.c-indeterminate
+    .c-thumb-focus
+      opacity 0
+    .c-indeterminate-focus
+      opacity 1
+
+
+  // ----------------------------------
+
+
+  .c-indeterminate-dot
+    abs-center-x()
+    background rgba(black, 0.15)
+    opacity 0
+    transition opacity DURATION
+  &.c-indeterminate
+    .c-thumb
+      opacity 0
+    .c-indeterminate-dot
+      opacity 1
+
+
+  // ----------------------------------
+
+
+  // Transitions (after load to avoid slide-movement on first render).
+  &.c-animated .c-groove
+    transition background-color DURATION, border-color DURATION, opacity DURATION
+    .c-thumb
+      transition background-color DURATION, border-color DURATION, left DURATION
+
+
+
+  // SIZES ------------------------------------------------------
+
+  groove-size(WIDTH, HEIGHT, CHECKED_LEFT, FOCUS_MARGIN)
+    min-height HEIGHT
+    > .c-groove-outer
+      size WIDTH, HEIGHT
+      > .c-groove
+        size(WIDTH, HEIGHT)
+        .c-groove-bg
+          GROOVE_MARGIN = (HEIGHT / 5)
+          abs-pos 0, GROOVE_MARGIN, 0, GROOVE_MARGIN
+          border-radius ((HEIGHT - (GROOVE_MARGIN * 2)) * 0.5)
+        .c-thumb
+          SIZE = HEIGHT
+          size SIZE, SIZE
+          > .c-thumb-focus
+            border-radius 50%
+            NEGATIVE_MARGIN = 0 - FOCUS_MARGIN
+            abs-pos(NEGATIVE_MARGIN, NEGATIVE_MARGIN, NEGATIVE_MARGIN, NEGATIVE_MARGIN)
+
+        > .c-indeterminate-focus
+          NEGATIVE_MARGIN = 0 - FOCUS_MARGIN
+          abs-pos(NEGATIVE_MARGIN, NEGATIVE_MARGIN, NEGATIVE_MARGIN, NEGATIVE_MARGIN)
+          border-radius ((HEIGHT + (FOCUS_MARGIN * 2)) * 0.5)
+
+    &.c-checked
+      .c-thumb
+        left CHECKED_LEFT
+
+
+  // ----------------------------------
+
+
+  &.c-size-22
+    groove-size(35px, 22px, 13px, 8px)
+    .c-indeterminate-dot
+      size(12, 4)
+      top 9px
+
+  &.c-size-34
+    groove-size(54px, 34px, 21px, 12px)
+    .c-indeterminate-dot
+      size(18, 6)
+      top 14px
+
+
+  // COLORS ------------------------------------------------------
+
+
+
+  // Unchecked -------------------------
+  &.c-not-checked
+    .c-groove
+      .c-groove-bg
+        background rgba(black, 0.02)
+        border-color rgba(black, 0.08)
+      .c-thumb
+        .c-visual
+          border-color darken(white, 15%)
+          box-shadow 1px 2px 6px 2px rgba(black, 0.1)
+      .c-thumb-focus, .c-indeterminate-focus
+        background rgba(black, 0.03)
+
+
+  // Checked -------------------------
+  &.c-checked
+    .c-groove
+      .c-groove-bg
+        background GREEN
+        border-color GREEN
+      .c-thumb
+        .c-visual
+          border-color white
+          box-shadow 1px 2px 6px 2px rgba(black, 0.2)
+      .c-thumb-focus, .c-indeterminate-focus
+        background rgba(GREEN, 0.15)
+

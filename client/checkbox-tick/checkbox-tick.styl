@@ -1,0 +1,121 @@
+@import 'core.import'
+
+
+.c-checkbox-tick
+  GREEN = #4cd864
+  DURATION = 0.2s
+
+  position relative
+  display inline-block
+  cursor pointer
+  outline none
+
+  box-sizing border-box
+  *
+    box-sizing border-box
+
+  &.c-disabled
+    opacity 0.4
+    cursor default
+
+  // -------------------------------
+
+  .c-thumb
+    .c-tick
+      transform rotate(45deg)
+      opacity 0
+
+  &.c-indeterminate
+    .c-thumb
+      .c-tick
+        transform none
+
+  // -------------------------------
+
+
+  .c-focus
+    MARGIN = -10
+    abs-pos MARGIN, MARGIN, MARGIN, MARGIN
+    opacity 0
+    border-radius 100%
+    transition opacity DURATION
+  &:focus
+    .c-focus
+      opacity 1
+
+
+
+  // SIZE -------------------------------------------------
+
+
+  &.c-size-22
+    size(22)
+    .c-thumb
+      size(18)
+      margin 2px
+      border-radius 3px
+      border solid 2px
+      .c-tick
+        abs-pos 7, 2, null, null
+        size(7, 13)
+        border-bottom solid 2px
+        border-right solid 2px
+
+  &.c-size-34
+    size(34)
+    .c-thumb
+      size(28)
+      margin 3px
+      border-radius 5px
+      border solid 3px
+      .c-tick
+        abs-pos 12, 4, null, null
+        size(10, 20)
+        border-bottom solid 3px
+        border-right solid 3px
+
+
+  // COLOR -------------------------------------------------
+
+
+  &.c-not-checked
+    COLOR = rgba(black, 0.4)
+    .c-thumb
+      border-color COLOR
+      .c-tick
+        border-color COLOR
+    .c-focus
+      background rgba(black, 0.03)
+
+
+  &.c-checked
+    .c-thumb
+      background GREEN
+      border-color transparent
+      .c-tick
+        border-color white
+        opacity 1
+    .c-focus
+      background rgba(GREEN, 0.15)
+
+
+  //INDETERMINATE ------------------------------------------------------
+
+  &.c-indeterminate
+    .c-thumb .c-tick
+      border-color transparent
+      abs-center()
+      background rgba(black, 0.2)
+
+    &.c-size-22
+      .c-thumb .c-tick
+        size(10, 3)
+
+    &.c-size-34
+      .c-thumb .c-tick
+        size(15, 4)
+
+
+
+
+
