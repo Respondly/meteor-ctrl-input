@@ -63,7 +63,7 @@ Ctrl.define
 
       # Load the appropriate affordance Ctrl.
       affordanceHandle = null
-      affordanceCtrl = null
+      @affordanceCtrl = null
       @autorun =>
           mode = @api.mode()
           type = switch mode
@@ -72,7 +72,7 @@ Ctrl.define
                    else throw new Error("Mode not supported: #{ mode }")
 
           # Destroy existing affordance control if it exists.
-          affordanceCtrl?.dispose()
+          @affordanceCtrl?.dispose()
           affordanceHandle?.stop()
 
           # Insert the new affordance control.
@@ -82,7 +82,7 @@ Ctrl.define
                   isEnabled: @api.isEnabled()
                   isChecked: @api.isChecked()
                 }
-          ctrl = affordanceCtrl = @appendCtrl(type, '> .c-affordance', data:data)
+          ctrl = @affordanceCtrl = @appendCtrl(type, '> .c-affordance', data:data)
           ctrl.onReady =>
               affordanceHandle = @autorun =>
                   # Keep the affordance in sync with the root Checkbox.
@@ -165,11 +165,20 @@ Ctrl.define
 
 
       ###
+      Handled assigning focus to the control.
+      ###
+      focus: ->
+        # Pass focus down to the embedded affordance.
+        @affordanceCtrl?.focus()
+
+
+      ###
       See [Ctrls.DataBinder].
       ###
       bind: (propertyName, modelFactory) ->
         @__internal__.binder?.dispose()
         @__internal__.binder = new Ctrls.DataBinder(@ctrl, 'isChecked', propertyName, modelFactory)
+
 
 
     helpers:

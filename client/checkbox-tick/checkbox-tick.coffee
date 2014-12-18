@@ -1,5 +1,5 @@
 Ctrl.define
-  'c-checkbox-switch':
+  'c-checkbox-tick':
     init: ->
       # Ensure size is supported.
       @autorun =>
@@ -7,6 +7,7 @@ Ctrl.define
           size = @api.size()
           unless (supportedSizes.any (item) -> item is size)
             throw new Error("Size '#{ size }' not supported. Use one of: #{ supportedSizes }")
+
 
     ready: ->
       # Only allow animations after load is complete
@@ -35,5 +36,6 @@ Ctrl.define
         css += ' c-disabled' if not isEnabled
         css += " c-size-#{ size }"
         css
+
 
 
