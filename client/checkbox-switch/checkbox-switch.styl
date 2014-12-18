@@ -1,9 +1,7 @@
 @import 'core.import'
 
 
-
-
-.c-checkbox
+.c-checkbox-switch
   GREEN = #4cd864
   DURATION = 0.2s
   position relative
@@ -12,10 +10,11 @@
   outline none
   box-sizing border-box
 
-  div
-    vertical-align middle
+  &.c-disabled
+    opacity 0.4
+    cursor default
 
-  // ----------------------------------
+  // -------------------------------
 
   .c-groove-outer
     position relative
@@ -36,6 +35,7 @@
 
 
   // FOCUS ----------------------------------
+
 
   .c-thumb-focus, .c-indeterminate-focus
     opacity 0
@@ -70,41 +70,11 @@
   // ----------------------------------
 
 
-  &.c-disabled
-    opacity 0.4
-    cursor default
-
-  .c-label
-    display inline-block
-    color darken(white, 65%)
-    vertical-align middle
-
-  .c-message
-    color darken(white, 65%)
-
-
-  // ----------------------------------
-
-
   // Transitions (after load to avoid slide-movement on first render).
   &.c-animated .c-groove
     transition background-color DURATION, border-color DURATION, opacity DURATION
     .c-thumb
       transition background-color DURATION, border-color DURATION, left DURATION
-
-
-  // ----------------------------------
-
-
-  // Straddle toggles.
-  &.c-straddle
-    OPACITY = 0.5
-    &.c-checked
-      .c-label.c-left
-        opacity OPACITY
-    &.c-not-checked
-      .c-label.c-right
-        opacity OPACITY
 
 
 
@@ -137,53 +107,21 @@
       .c-thumb
         left CHECKED_LEFT
 
+
   // ----------------------------------
 
 
   &.c-size-22
-    line-height 18px
     groove-size(35px, 22px, 13px, 8px)
     .c-indeterminate-dot
       size(12, 4)
       top 9px
-    .c-label
-      font-size 14px
-      font-weight 400
-      &.c-left
-        padding-right 2px
-      &.c-right
-        padding-left 4px
-    .c-message
-      font-size 12px
-      line-height 16px
-      margin-top 6px
-    &.c-has-label
-      .c-message
-        padding-left 41px
-
-  // ----------------------------------
 
   &.c-size-34
-    line-height 30px
     groove-size(54px, 34px, 21px, 12px)
     .c-indeterminate-dot
       size(18, 6)
       top 14px
-    .c-label
-      font-size 18px
-      font-weight 300
-      &.c-left
-        padding-right 3px
-      &.c-right
-        padding-left 6px
-    .c-message
-      font-size 14px
-      line-height 18px
-      margin-top 8px
-    &.c-has-label
-      .c-message
-        padding-left 62px
-
 
 
   // COLORS ------------------------------------------------------
@@ -216,8 +154,4 @@
           box-shadow 1px 2px 6px 2px rgba(black, 0.2)
       .c-thumb-focus, .c-indeterminate-focus
         background rgba(GREEN, 0.15)
-
-
-
-
 
