@@ -1,23 +1,13 @@
 <template name='c-checkbox'>
   <div
-    class='c-checkbox c-not-checked {{ cssClass }}'
+    class='c-checkbox {{ cssClass }}'
     tabindex='0'>
 
     {{#if showLeftLabel}}
       <div class='c-label c-left'>{{{ labelLeft }}}</div>
     {{/if}}
 
-    <div class='c-groove-outer'>
-      <div class='c-groove'>
-        <div class='c-groove-bg'></div>
-        <div class='c-indeterminate-focus'></div>
-        <div class='c-thumb'>
-          <div class='c-thumb-focus'></div>
-          <div class='c-visual'></div>
-        </div>
-      </div>
-      <div class='c-indeterminate-dot'></div>
-    </div>
+    <div class='c-affordance'></div>
 
     {{#if labelRight}}
       <div class='c-label c-right'>{{{ labelRight }}}</div>

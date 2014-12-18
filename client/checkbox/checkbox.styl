@@ -1,0 +1,100 @@
+@import 'core.import'
+
+
+
+
+.c-checkbox
+  GREEN = #4cd864
+  DURATION = 0.2s
+  position relative
+  display inline-block
+  cursor pointer
+  outline none
+  box-sizing border-box
+
+  div
+    vertical-align middle
+
+  .c-affordance
+    display inline-block
+
+
+  // ----------------------------------
+
+
+  &.c-disabled
+    cursor default
+    .c-label, .c-message
+      opacity 0.4
+
+  .c-label
+    display inline-block
+    color darken(white, 65%)
+    vertical-align middle
+
+  .c-message
+    color darken(white, 65%)
+
+
+
+
+
+  // SIZES ------------------------------------------------------
+
+
+  &.c-size-22
+    line-height 18px
+    .c-label
+      font-size 14px
+      font-weight 400
+      &.c-left
+        padding-right 2px
+      &.c-right
+        padding-left 4px
+    .c-message
+      font-size 12px
+      line-height 16px
+      margin-top 6px
+    &.c-has-label
+      .c-message
+        padding-left 41px
+
+  // ----------------------------------
+
+  &.c-size-34
+    line-height 30px
+    .c-label
+      font-size 18px
+      font-weight 300
+      &.c-left
+        padding-right 3px
+      &.c-right
+        padding-left 6px
+    .c-message
+      font-size 14px
+      line-height 18px
+      margin-top 8px
+    &.c-has-label
+      .c-message
+        padding-left 62px
+
+
+  // ------------------------------------------------------
+
+
+  // Straddle toggles.
+  &.c-straddle
+    OPACITY = 0.5
+    &.c-checked
+      .c-label.c-left
+        opacity OPACITY
+    &.c-not-checked
+      .c-label.c-right
+        opacity OPACITY
+
+    &.c-has-label
+      .c-message
+        padding-left 0px
+
+
+
