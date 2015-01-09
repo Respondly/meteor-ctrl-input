@@ -1,8 +1,8 @@
 sizeMap =
-  'c-size-50': 'c-btn-large'
-  'c-size-32': 'c-btn'
-  'c-size-28': 'c-btn-small'
-  'c-size-22': 'c-btn-mini'
+  'c-size-50': 'btn-large'
+  'c-size-32': 'btn'
+  'c-size-28': 'btn-small'
+  'c-size-22': 'btn-mini'
 
 
 ###
