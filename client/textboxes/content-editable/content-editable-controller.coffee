@@ -89,31 +89,11 @@ class Ctrls.ContentEditable extends AutoRun
           domValue = Util.isTrue(@el.attr(CONTENT_EDITABLE))
           @el.attr(CONTENT_EDITABLE, canEdit) if canEdit isnt domValue
 
-
-    # Create the rich-text formatter.
-    mediumEditor = new PKG.MediumEditor el[0],
-          placeholder: ''
-          cleanPastedHTML:  false
-          forcePlainText:   true
-          delay:            100
-          firstHeader:      'h1'
-          secondHeader:     'h2'
-          buttons:          [
-                              'bold'
-                              'italic'
-                              'anchor'
-                              'header1'
-                              'header2'
-                              'quote'
-                              'unorderedlist'
-                              'orderedlist'
-                              'indent'
-                              'outdent'
-                            ]
+    quill = new Quill el[0]
 
     # Sync rich-formatting controller.
     @autorun =>
-          options = mediumEditor.options
+          options = quill.options
 
           # Determine whether the formatting toolbar should be disabled.
           disableToolbar = @isPlainText()

@@ -33,9 +33,9 @@ Package.onUse(function (api) {
   api.addFiles('client/checkbox-tick/checkbox-tick.html', 'client');
   api.addFiles('client/checkbox-switch/checkbox-switch.html', 'client');
   api.addFiles('client/checkbox/checkbox.html', 'client');
-  api.addFiles('client/textboxes/content-editable/lib/js/medium-editor.js', 'client');
-  api.addFiles('client/textboxes/content-editable/lib/css/medium-editor.css', 'client');
-  api.addFiles('client/textboxes/content-editable/lib/css/theme-default.css', 'client');
+  api.addFiles('client/textboxes/content-editable/lib/js/quill.js', 'client');
+  api.addFiles('client/textboxes/content-editable/lib/css/quill.base.css', 'client');
+  api.addFiles('client/textboxes/content-editable/lib/css/quill.snow.css', 'client');
   api.addFiles('client/textboxes/content-editable/ctrl/content-editable.coffee', 'client');
   api.addFiles('client/textboxes/content-editable/ctrl/content-editable.styl', 'client');
   api.addFiles('client/select/select-option/select-option.coffee', 'client');
