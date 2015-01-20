@@ -1,6 +1,7 @@
 # Input Controls
 UI controls that take clicks, gestures of text input from the user.
 
+[![Circle CI](https://circleci.com/gh/Respondly/meteor-ctrls-input.svg?style=svg)](https://circleci.com/gh/Respondly/meteor-ctrls-input)
 
 ## Installation
 When running for the first time:
