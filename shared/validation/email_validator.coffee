@@ -29,7 +29,8 @@ class Ctrls.EmailValidator
     # Split on the '@'.
     parts  = email.split('@')
     name   = parts[0]
-    domain = parts[1]?.toLowerCase().trimRight()
+    domain = parts[1]?.toLowerCase()
+
     return invalid("Email address has too many @ symbols.") unless parts.length is 2
     return invalid("Email address does not have a name.") if name.isBlank()
     return invalid("Email address does not have a domain.") if domain.isBlank()
@@ -38,8 +39,11 @@ class Ctrls.EmailValidator
     unless domain.has /.+\..+/i
       return invalid("Domain name is not complete.")
 
-    if domain.indexOf(' ') >= 0
+    if /\s/g.test(domain)
       return invalid("Domain name cannot contain spaces.")
+
+    if /\s/g.test(name)
+      return invalid("Name cannot contain spaces.") # rejected by Gmail
 
     if @invalidDomains && @invalidDomains.indexOf(domain) >= 0
       return invalid("An email address at #{domain} can't be used.")
