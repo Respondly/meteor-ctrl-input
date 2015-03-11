@@ -177,7 +177,7 @@ Ctrl.define
 
       cssClass: ->
         isEnabled = @api.isEnabled()
-        css = "c-size-#{ @api.size() }"
+        css = "c-size-#{ @api.size() } #{ @defaultValue('cssClass') }"
         css += ' c-enabled' if isEnabled
         css += ' c-disabled' if not isEnabled
         css
