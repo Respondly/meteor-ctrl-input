@@ -177,6 +177,10 @@ class Ctrls.ContentEditable extends AutoRun
 
     # Paste AFTER medium-js has handled the paste.
     el.on 'paste', (e) =>
+        # bubbles paste:image event when trying to paste images
+        if (e.originalEvent.clipboardData?.types?.any (t) -> t is 'Files')
+          bubble 'paste:image', e
+
         userAgent = UserAgent.current
         wasChanged = false
 
