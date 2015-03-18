@@ -58,6 +58,7 @@ Ctrl.define
       bubble('changed')
       bubble('key:enter')
       bubble('key:esc')
+      bubble('paste:image')
 
       # Handle events.
       @textbox.on 'focus', (j,e) => @find().addClass 'focused'

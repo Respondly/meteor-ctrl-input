@@ -1,5 +1,6 @@
 // This is not the vanilla MediumEditor - one line has been changed
-// to fix pasting in windows. (Line 1076 at time of writing)
+// to fix pasting in windows. (Line 1076, at time of writing)
+// to fix inserting an empty line when pasting images ( 1101 and 1088 )
 
 function MediumEditor(elements, options) {
     'use strict';
@@ -1085,7 +1086,10 @@ if (typeof module === 'object') {
                             } else {
                                 // Insert empty line.
                                 // See: https://github.com/daviferreira/medium-editor/issues/211
-                                html += '<p><br></p>'
+                                // Emiliano: disabling pasting when trying to paste images
+                                if (clipboardData.items && clipboardData.items.length === 0) {
+                                    html += '<p><br></p>'
+                                }
                             }
                         }
 
@@ -1095,7 +1099,7 @@ if (typeof module === 'object') {
                         //      http://stackoverflow.com/questions/6690752/insert-html-at-caret-in-a-contenteditable-div/6691294#6691294
                         if (self.isIE) {
                             console.log( 'PASTING NOT WORKIGN IN IE :: ', html );
-                        } else {
+                        } else if (html.length) {
                             document.execCommand('insertHTML', false, html);
                         }
 
