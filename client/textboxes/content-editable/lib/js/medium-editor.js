@@ -1087,7 +1087,11 @@ if (typeof module === 'object') {
                                 // Insert empty line.
                                 // See: https://github.com/daviferreira/medium-editor/issues/211
                                 // Emiliano: disabling pasting when trying to paste images
-                                if (clipboardData.items && clipboardData.items.length === 0) {
+                                var hasFiles = false
+                                if (clipboardData.items && clipboardData.items.length > 0) {
+                                    hasFiles = clipboardData.items[0].type.has('image')
+                                }
+                                if (!hasFiles) {
                                     html += '<p><br></p>'
                                 }
                             }
