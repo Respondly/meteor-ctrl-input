@@ -211,6 +211,12 @@ class Ctrls.ContentEditable extends AutoRun
         @html(@el.html()) # Ensure the HTML property is up-to-date.
         @caretToEnd() if wasChanged
 
+
+    el.on 'input', (e) =>
+      @html( el.html(), _originalValue:keydownValue )
+      e = keyArgs(e)
+      bubble 'input', e
+
     # Finish up.
     @updateState()
     @
@@ -509,4 +515,3 @@ class Ctrls.ContentEditable extends AutoRun
 
 
 toText = (html) -> PKG.htmlToText(html)
-
