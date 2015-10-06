@@ -20,7 +20,7 @@ Ctrl.define
             throw new Error("#{ attr } '#{ value }' not supported. Use one of: #{ supportedValues }")
 
       @autorun => throwUnlessSupported('size', @api.size(), [50, 32, 28, 22])
-      @autorun => throwUnlessSupported('color', @api.color(), ['silver', 'blue', 'green', 'red', 'orange', 'black', null])
+      @autorun => throwUnlessSupported('color', @api.color(), ['silver', 'blue', 'green', 'red', 'orange', 'dark-orange', 'black', null])
 
 
 
@@ -92,4 +92,3 @@ Ctrl.define
       'keyup': (e) ->
         if @ctrl.hasFocus()
           @api.click() if e.which is Const.KEYS.ENTER
-
