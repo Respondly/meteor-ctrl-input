@@ -19,7 +19,7 @@ Package.onUse(function (api) {
   // Generated with: github.com/philcockfield/meteor-package-paths
   api.addFiles('shared/ns.js', ['client', 'server']);
   api.addFiles('shared/css-mixins/textbox.import.styl', 'client');
-  api.addFiles('shared/css-mixins/textbox.import.styl', 'server', { isAsset:true });
+  api.addAssets('shared/css-mixins/textbox.import.styl', 'server', { isAsset:true });
   api.addFiles('shared/validation/email_validator.coffee', ['client', 'server']);
   api.addFiles('shared/validation/screen_name_validator.coffee', ['client', 'server']);
   api.addFiles('shared/util.coffee', ['client', 'server']);
@@ -67,8 +67,8 @@ Package.onUse(function (api) {
   api.addFiles('client/radio/radio.styl', 'client');
   api.addFiles('client/common.styl', 'client');
   api.addFiles('client/data-binder.coffee', 'client');
-  api.addFiles('images/text-input-error.svg', ['client', 'server']);
-  api.addFiles('images/text-input-tick.svg', ['client', 'server']);
+  api.addAssets('images/text-input-error.svg', ['client', 'server']);
+  api.addAssets('images/text-input-tick.svg', ['client', 'server']);
 
 });
 
