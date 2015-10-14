@@ -5,7 +5,7 @@ class Ctrls.EmailValidator
   constructor: (@email, @invalidDomains = [] ) ->
     isValid: undefined
     message: null
-    @validate(email) if email?
+    @validate(@email) if @email?
 
 
   ###
@@ -52,4 +52,3 @@ class Ctrls.EmailValidator
     @isValid = true
     @message = null
     true
-
