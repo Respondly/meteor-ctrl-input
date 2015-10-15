@@ -5,7 +5,7 @@ class Ctrls.TwitterScreenNameValidator
   constructor: (@screenName) ->
     isValid: undefined
     message: null
-    @validate(screenName) if screenName?
+    @validate(@screenName) if @screenName?
 
 
   ###
